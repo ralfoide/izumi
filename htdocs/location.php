@@ -30,24 +30,38 @@
   
 // base installation directory (absolute path)
 // Needs to use / or \ (Win) and need to ends up with a dir separator
-$dir_install			= 'C:\RalfDev\php\sourceforge\izumi\\';
+$dir_install			= '/home/ralf/files/dev/php/sourceforge/izumi/';	// linux
+# $dir_install			= 'C:\RalfDev\php\sourceforge\izumi\\';				// windows
 
 // php sources (relative to $dir_install)
 // Needs to use / or \ (Win) and need to ends up with a dir separator
-$dir_src				= 'src\\';
+$dir_src				= 'src/';		// linux	
+# $dir_src				= 'src\\';		// windows
 
 // global settings (relative to $dir_install)
 // Needs to use / or \ (Win) and need to ends up with a dir separator
-$dir_globset			= 'settings\\';
+$dir_globset			= 'settings/';	// linux
+# $dir_globset			= 'settings\\';	// windows
 
 // ---- local settings ---
 
 // the entry-point directory (i.e. _this_ directory in absolute)
-$dir_info_content		= pathinfo(realpath($_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_NAME']));
-$dir_abs_content		= $dir_info_content['dirname'];
+$dir_abs_content = realpath($_SERVER['DOCUMENT_ROOT'] . $_SERVER['SCRIPT_NAME']);
+if (file_exists($dir_abs_content))
+{
+	if (is_file($dir_abs_content))
+	{
+		$dir_abs_content = pathinfo($dir_abs_content);
+		$dir_abs_content = $dir_abs_content['dirname'];
+	}
+}
+else
+{
+	izu_check_src_file($p1);	// invalid configuration or exploit?
+}
 
 // local settings
-$dir_locset				= '';
+$dir_locset				= './';
 
 // album location (relative to dir_abs_album)
 $dir_album				= 'my-content';
@@ -59,9 +73,12 @@ $dir_option				= 'tg-options';
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.1  2005-02-16 02:04:51  ralfoide
-//	Stable version 0.9.4 updated to SourceForge
+//	Revision 1.2  2005-04-05 18:51:36  ralfoide
+//	Updated for Windows vs Linux config
 //
+//	Revision 1.1  2005/02/16 02:04:51  ralfoide
+//	Stable version 0.9.4 updated to SourceForge
+//	
 //	Revision 1.4  2004/12/09 19:43:07  ralf
 //	dos2unix
 //	
