@@ -111,8 +111,8 @@ which will show the content of
 	"Dir/Test.blogdir/_main.izu".
 
 Permalinks will be in the form
-	"Dir/Test.blog?s=MD5xxxxxxxxxxxxxx"
-where "MD5xxxxxxxxxxx" is the 32-characters md5, in which case if it exists
+	"Dir/Test.blog?s=xxxxxxxxxxxxxx"
+where "xxxxxxxxxxx" is the 32-characters key, in which case if it exists
 the cached entry will be served:
 	"Dir/Test.blogdir/NNNN.MD5xxxxxxxxxxxxxx.izu".
 
@@ -338,6 +338,88 @@ class RBlog extends RPage
 		return TRUE;
 	}
 
+
+	//-----------------------------------------------------------------------
+	//-----------------------------------------------------------------------
+	
+	//***************************************
+	function BlogEntryKey($date, $title = "")
+	//***************************************
+	// This static method returns the key for a blog entry
+	// The key is a string, typically an MD5 or a simplified combination
+	// of the date & title which is unique and safe to use as a file name.
+	// As such it should only contain number, letters and _ and be case
+	// insenstive.
+	//
+	// The old way was to use MD5($date . $title).
+	// This changed to a numerical date combined with part of the
+	// title and a CRC32 on the title if too long (keep up to 32 chars
+	// for the key).
+	{
+		$d = "";
+		$t = "";
+		
+		$digits = "0123456789";
+		$alpha  = "abcdefghijklmnopqrstuvwxyz";
+		$extra  = " -_=+[]{};:'\",./<>?`~!@#$%^&*()\\|";
+		
+		// Only keep numbers in date
+		if ($date)
+		{
+			$n = strlen($date);
+			for($i = 0; $i < $n; $i++)
+			{
+				$c = $date[$i];
+				if (strpos($digits, $c) !== FALSE)
+					$d .= $c;
+			}
+		}
+
+		// only keep alpha, digits and _ in title
+		if ($title)
+		{
+			$lowcaps = strtolower($title);
+			$n = strlen($title);
+			for($i = 0; $i < $n; $i++)
+			{
+				$c = $lowcaps[$i];
+				if (   strpos ($digits, $c) !== FALSE
+					|| strpos($alpha , $c) !== FALSE)
+					$t .= $c;
+				else if (strpos($extra, $c) !== FALSE)
+					$t .= '_';
+			}
+		}
+
+		// we want at least 4 digits for the date
+		if (strlen($d) > 4)
+		{
+			if (strlen($t) > 0)
+				$d .= '_' . $t;
+
+			// if too long, add a crc32			
+			$n = strlen($d);
+			if ($n > 32)
+			{
+				$d = substr($d, 0, 23);
+				
+				// get the crc32 of the original date + string combo
+				$c = crc32($date . $title);
+				
+				$d .= sprintf("_%x", $c);
+			}
+			
+			return $d;
+		}		
+		
+		
+		// if the date or the title were not satisfactory
+		// revert to an MD5 key
+		return md5($date . $title);
+	}
+
+
+
 	//-----------------------------------------------------------------------
 	//-----------------------------------------------------------------------
 	// P R I V A T E   M E T H O D S
@@ -363,11 +445,12 @@ class RBlog extends RPage
 
 		$this->mIsRss = $this->mPath->IsRss();
 
-		if (is_string($section) && strlen($section) == 32)
+		if (is_string($section) && strlen($section) > 4 && strlen($section) <= 32)
 		{
 			// Parse list of files in the izu blog dir
 			// and select the first one that matches the given section
-			// (section key is a 32-char md5)
+			// (section key is a 32-char max and should at least
+			//  start with 4 digits)
 
 			$abs_dir = $this->mPath->GetBlogDirPath();
 
@@ -560,9 +643,9 @@ class RBlog extends RPage
 
 		// Initialize some state
 
-		$md5_list			= array();
+		$key_list			= array();
 		$nb_entries			= -1;
-		$section_md5		= '';
+		$section_key		= '';
 		$first_date			= '';
 		$last_date			= '';
 		$blog_header		= NULL;
@@ -612,7 +695,7 @@ class RBlog extends RPage
 				// Close previous section file, if any
 				if ($current_section_file != NULL)
 				{
-					$this->writeFooter($current_section_file, $current_main_file, $section_md5);
+					$this->writeFooter($current_section_file, $current_main_file, $section_key);
 					$this->writeOldArticlesHeader($current_section_file);
 					$this->writeRssItemFooter($rss_file, $rss_content);
 					$rss_content = '';
@@ -666,8 +749,7 @@ class RBlog extends RPage
 
 				
 				// Create new section file if possible, keep filename around
-				// reuse filename if a previous session had the same MD5
-				// (this shouldn't happen anymore as each session key includes the counter)
+				// reuse filename if a previous session had the same key
 
 				$date = $matches[1];
 				$title = $matches[2];
@@ -677,15 +759,26 @@ class RBlog extends RPage
 					$first_date = $date;
 				$last_date = $date;
 
-				// compute new section md5
-				$section = sprintf("%04d.%s.%s", $nb_entries, $date, $title);
-
-				$section_md5 = md5($section);
+				// compute new section key
+				//
+				// Note RM 20050403: Originally the MD5 was computed using the
+				// section index, the date and title. The purpose was to allow
+				// two entries to have the same date and title. Yet this is
+				// inherently flawed as it means the MD5 changes when new entries
+				// are added or reordered. Thus it breaks the _perma_ link.
+				// Consequently I'm now using what at wanted in the very first
+				// beginning which is only hte date and the title. This breaks
+				// the existing blog keys (not too bad). It also means I'm going
+				// back to the old behavior of appending to previous sections
+				// with the same key.
+				
+				$section = sprintf(".%s.%s", $date, $title);
+				$section_key = $this->BlogEntryKey($date, $title);
 
 				// DEBUG
-				// echo "Section : "; var_dump($section); var_dump($section_md5); echo "<p>";
+				// echo "Section : "; var_dump($section); var_dump($section_key); echo "<p>";
 
-				$filename = $md5_list[$section_md5];					
+				$filename = $key_list[$section_key];					
 
 				if ($filename == NULL)
 				{
@@ -693,17 +786,19 @@ class RBlog extends RPage
 					$filename = sprintf("%s%04d.%s%s",
 											$abs_dir,
 											$nb_entries,
-											$section_md5,
+											$section_key,
 											EXT_SOURCE);
 
-					$md5_list[$section_md5] = $filename;
+					$key_list[$section_key] = $filename;
 				}
 
 				// Open new section file or reopen and append to older one
+				$file_already_exists  = izu_is_file($filename);
 				$current_section_file = fopen($filename, 'a');
-				
-				// Write header to file
-				if ($current_section_file != NULL)
+
+				// Write header to file only if file is new
+				// Note: we can't use ftell() because it's set to 0 for an append-stream
+				if ($current_section_file != NULL && !$file_already_exists)
 				{
 					$this->writeHeader($current_section_file, $blog_header);
 				}
@@ -716,11 +811,11 @@ class RBlog extends RPage
 				}
 				
 				// Write header to RSS file
-				$this->writeRssItemHeader($rss_file, $date, $title, $section_md5);
+				$this->writeRssItemHeader($rss_file, $date, $title, $section_key);
 				
 				// Append a permalink to this section to previous section files
 				foreach($prev_section_file_list as $f)
-					$this->writePreviousArticleLink($f, $date, $title, $section_md5);
+					$this->writePreviousArticleLink($f, $date, $title, $section_key);
 
 			}
 			else if (preg_match('/^----/', $line, $matches) == 1)
@@ -767,7 +862,7 @@ class RBlog extends RPage
 
 		if ($current_section_file != NULL)
 		{
-			$this->writeFooter($current_section_file, $current_main_file, $section_md5);
+			$this->writeFooter($current_section_file, $current_main_file, $section_key);
 			$this->writeOldArticlesHeader($current_section_file);
 			fclose($current_section_file);
 		}
@@ -1066,9 +1161,14 @@ class RBlog extends RPage
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.1  2005-02-16 02:04:51  ralfoide
-//	Stable version 0.9.4 updated to SourceForge
+//	Revision 1.2  2005-04-05 18:53:44  ralfoide
+//	Started work on version 1.1
+//	Changed blog entries keys from MD5 to encoded date/title clear text.
+//	Added internal anchor references to blog entries.
 //
+//	Revision 1.1  2005/02/16 02:04:51  ralfoide
+//	Stable version 0.9.4 updated to SourceForge
+//	
 //	Revision 1.7  2004/12/20 07:01:37  ralf
 //	New minor features. Version 0.9.4
 //	

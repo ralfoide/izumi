@@ -24,15 +24,20 @@
 */
 //************************************************************************
 
-$izu_version = "1.0";
+$izu_version = "1.1";
 
 // end
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.2  2005-02-16 02:33:02  ralfoide
-//	Version 1.0 on SourceForge with DEB package
+//	Revision 1.3  2005-04-05 18:54:01  ralfoide
+//	Started work on version 1.1
+//	Changed blog entries keys from MD5 to encoded date/title clear text.
+//	Added internal anchor references to blog entries.
 //
+//	Revision 1.2  2005/02/16 02:33:02  ralfoide
+//	Version 1.0 on SourceForge with DEB package
+//	
 //	Revision 1.1  2005/02/16 02:04:51  ralfoide
 //	Stable version 0.9.4 updated to SourceForge
 //	

@@ -363,8 +363,8 @@ class RPagePath
 		else if (strlen($index) == 4)
 			// A 4-digit main page index
 			$s .= FILE_BLOG . $index;
-		else if (strlen($key) == 32)
-			// A 32-character md5 for a permalink key
+		else if (strlen($key) > 4 && strlen($key) <= 32)
+			// A 32-character for a permalink key
 			$s .= strtolower($key);
 		if ($key == '' && $index == '')
 			$s .= FILE_BLOG . '0000';
@@ -392,9 +392,14 @@ class RPagePath
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.1  2005-02-16 02:04:51  ralfoide
-//	Stable version 0.9.4 updated to SourceForge
+//	Revision 1.2  2005-04-05 18:54:01  ralfoide
+//	Started work on version 1.1
+//	Changed blog entries keys from MD5 to encoded date/title clear text.
+//	Added internal anchor references to blog entries.
 //
+//	Revision 1.1  2005/02/16 02:04:51  ralfoide
+//	Stable version 0.9.4 updated to SourceForge
+//	
 //	Revision 1.6  2004/12/09 19:44:06  ralf
 //	dos2unix
 //	

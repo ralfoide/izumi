@@ -37,13 +37,12 @@ require_once(izu_require_once("RPageLog.php",  $dir_src));
 
 //-----------------------------------------------------------------------
 
-if ($_SERVER["REMOTE_ADDR"] == "192.168.2.43")
+/*
+if ($_SERVER["REMOTE_ADDR"] == "192.168.2.42")
 	$_debug_=1;
-
 if ($_debug_)
-{
-	// phpinfo(INFO_ALL);
-}
+	phpinfo(INFO_ALL);
+*/
 
 //-----------------------------------------------------------------------
 
@@ -180,9 +179,14 @@ if ($izu_stat != NULL)
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.1  2005-02-16 02:04:51  ralfoide
-//	Stable version 0.9.4 updated to SourceForge
+//	Revision 1.2  2005-04-05 18:54:01  ralfoide
+//	Started work on version 1.1
+//	Changed blog entries keys from MD5 to encoded date/title clear text.
+//	Added internal anchor references to blog entries.
 //
+//	Revision 1.1  2005/02/16 02:04:51  ralfoide
+//	Stable version 0.9.4 updated to SourceForge
+//	
 //	Revision 1.12  2004/12/20 07:01:37  ralf
 //	New minor features. Version 0.9.4
 //	
