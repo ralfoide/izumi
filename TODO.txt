@@ -51,7 +51,13 @@ TBDL
 
 -- done --
 
-[1.0]
+[1.1] (unstable)
+
+20050404 [1.F] Source:  Added syntax highlight file for Vim
+20050403 [1.F] Source:  Internal anchors to blog permalinks are now possible
+20050403 [1.F] Source:  Changing blog entries permalinks from MD5 to "safe" text references (date/title combo)
+
+[1.0] (stable)
 
 20050215 [1.F] Distrib: SF upgraded to 1.0 with matching DEB packages
 20050215 [1.F] Tests:   Version 0.9.4 tested live and moved to 1.0 as deemed stable.
@@ -189,9 +195,12 @@ No tabs, use spaces for alignment (for viewcvs)
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.2  2005-02-16 02:32:54  ralfoide
-//	Version 1.0 on SourceForge with DEB package
+//	Revision 1.3  2005-04-05 19:08:14  ralfoide
+//	Update: v1.1, text-based permalinks, permalink anchors.
 //
+//	Revision 1.2  2005/02/16 02:32:54  ralfoide
+//	Version 1.0 on SourceForge with DEB package
+//	
 //	Revision 1.1  2005/02/16 02:04:49  ralfoide
 //	Stable version 0.9.4 updated to SourceForge
 //	
