@@ -1,0 +1,1225 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-US">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="robots" content="index,follow"> 
+	<link rel="shortcut icon" href="/.izumi/izumi.ico">
+		<script language="JavaScript" type="text/javascript" src="/.izumi/browser_detect.js"></script>
+ 	<title>Izumi: Ralf - Izumi Text Syntax</title>
+	</head>
+		<body bgcolor="#000000"
+			  text   ="#FFFFFF"
+			  link   ="#00FF00"
+			  alink  ="#00FFFF"
+			  vlink  ="#FFFF00"
+		>
+	<center>
+		<table width="100%" bgcolor="#77AA77"><tr><td>
+			<font color="#FFFF77"><center>
+				<font size="+2"><b> Izumi: Ralf - Izumi Text Syntax </b></font><br>			</center></font>
+		</td></tr></table>
+	</center>
+<pre>
+
+<b>Index</b>: <a href="http://ralf.alfray.com/.izumi/Index" title="Index" alt="Index"><b>Home</b></a>     | <a href="http://ralf.alfray.com/.izumi/WhatIsIzumi" title="WhatIsIzumi" alt="WhatIsIzumi">What Is Izumi</a> | <a href="http://ralf.alfray.com/.izumi/MiscLinks" title="MiscLinks" alt="MiscLinks">Misc Links</a>   | <a href="http://ralf.alfray.com/.izumi/RandomThoughts" title="RandomThoughts" alt="RandomThoughts">Random Thoughts</a> | <a href="http://ralf.alfray.com/.izumi/TooMuchToRead" title="TooMuchToRead" alt="TooMuchToRead">Too Much To Read</a> | <a href="http://ralf.alfray.com/.izumi/TheRantVault" title="TheRantVault" alt="TheRantVault">The Rant Vault</a> | <a href="http://ralf.alfray.com/.izumi/Quotes" title="Quotes" alt="Quotes">Quotes</a>
+<b>Dev</b>:   <a href="http://ralf.alfray.com/.izumi/ProjectList" title="ProjectList" alt="ProjectList"><b>Projects</b></a> | <a href="http://ralf.alfray.com/.izumi/Dev/IdeasForDev" title="Dev/IdeasForDev" alt="Dev/IdeasForDev">Ideas For Dev</a> | <a href="http://ralf.alfray.com/.izumi/Dev/NerdkillDev" title="Dev/NerdkillDev" alt="Dev/NerdkillDev">Nerdkill Dev</a> | <a href="http://ralf.alfray.com/.izumi/Dev/RigDev" title="Dev/RigDev" alt="Dev/RigDev">Rig Dev</a> | <a href="http://ralf.alfray.com/.izumi/Dev/HintDev" title="Dev/HintDev" alt="Dev/HintDev">Hint Dev</a>
+</pre>
+<hr>
+<center><img alt="Izumi Text Syntax" title="Izumi Text Syntax" src="http://www.alfray.com/projects/Izumi/img/izu_small.jpg"></center>
+<center><b><a href="http://ralf.alfray.com/.izumi/IzumiTextSyntax" title="IzumiTextSyntax" alt="IzumiTextSyntax">Izumi Text Syntax</a> describes the syntax used by Izumi files.</b></center>
+<pre>
+$Id$
+</pre>
+<hr>
+<h2>1. Description</h2>
+<p>
+This page briefly describes the syntax used in text files. 
+Izumi parses text files and renders rich web pages, 
+automatically adding style information based on a set of text patterns.
+<p>
+Original, Izumi text tags were loosely based on 
+<a href="http://sourceforge.net/projects/phpwiki/">PhpWiki</a> text patterns. 
+There are many differences with that particular syntax though, as Izumi tags
+evolved on their own. Only the very basic tags are similar so if you are
+familiar with <a href="http://sourceforge.net/projects/phpwiki/">PhpWiki</a> you will have
+to "relearn" most of them. If you are not familiar with Wikis, don't worry it
+is very easy to get started.
+<p>
+<p>
+Irrelevant trivia information:
+<ul>
+<li><i>"Wiki wiki"</i> means "quick" in Hawaiian.</li>
+<li><i>"Izumi"</i> roughly translates to <i>fountain</i> from Japanese. More precisely, it is a natural spring of pure water.</li>
+<p>
+<p>
+</ul>
+<hr>
+<h2>2. Content</h2>
+<p>
+This manual will teach you the various tags used by Izumi.
+The tags have been separated in 3 groups:
+<ul>
+<li>Basic rendering tags</li>
+<li>Advanced rendering tags</li>
+<li>Izumi specific tags</li>
+<p>
+<p>
+</ul>
+<hr>
+<h2>3. Basic Concepts</h2>
+<p>
+<p>
+<h3>3.1. A Simple Example</h3>
+<p>
+The workflow for writing an Izumi page is pretty simple:
+<ul>
+<li>Using your favorite editor, create a file called "MyPage.izu". 	It is important that the name start with an upper case letter, as explained below.</li>
+<li>Write a line containing: "Hello my ''name'' is __John__.".</li>
+<li>Add another line with: "You can access this page using this link: MyPage".</li>
+<li>Save it.</li>
+<li>Access the page in a web browser: <a href="http://izumi.example.com/MyPage">http://izumi.example.com/MyPage</a> and you shall see:</li>
+</ul>
+<blockquote>
+Hello my <i>name</i> is <b>John</b>. You can access this page using this link: <a href="http://ralf.alfray.com/.izumi/IzumiTextSyntax" title="IzumiTextSyntax" alt="IzumiTextSyntax">My Page</a>.
+</blockquote>
+<ul>
+<li>Repeat steps 2 thru 4.</li>
+<p>
+</ul>
+In this example you saw:
+<ul>
+<li>A page filename must follow a certain convention.</li>
+<li>Using 2 quotes or 2 underlines automatically render text in italics and bold.</li>
+<li>Any reference to page name is automatically converted to a link to this page.</li>
+</ul>
+All these will be explained below in more detail.
+<p>
+<p>
+<h3>3.2. Files naming convention</h3>
+<p>
+Izumi page names must follow the so-called "CamelConvention" that is names
+must be composed of words in the English alphabet. Each word must start with
+an upper case letter. For example if you want a page about your last vacations
+you may create a file "MyLastVacations.izu" and you will refer to it as
+"MyLastVacations" to link to it. When displayed by Izumi, it will be displayed
+as "My Last Vacations" (spaces are inserted automatically for you.)
+<p>
+One limitation is that you cannot have non-English-alphabet characters in a
+page name, nor can you have numbers or any punctuation sign or underscores.
+<p>
+<p>
+<h3>3.4. Intuitive tags versus advanced ones</h3>
+<p>
+Izumi tags are designed to be as easy and intuitive to use a possible.
+The basic idea is to let the writer (you!) type text as naturally as possible
+without worrying to much of how it will look like.
+Although this is a great principle when we write we generally decide on the
+fly of the content as well of the presentation on the fly. Consequently
+Izumi defines a number of tags which are easy to use an mostly unobtrusive,
+that is you should be able to learn them in a matter of minutes and simply
+insert them in your text as you go, without having to think too much about it.
+These are the basic tags explained below in section 4.
+<p>
+Izumi also provides some more advanced tags which syntax may be less natural
+and thus you are less likely to remember. Luckily you will use them a lot less
+so simply refer to this manual when needed.
+These are the advanced tags explained below in section 5.
+<p>
+Finally Izumi uses a subset of these advanced tags to control specific
+rendering properties of Izumi pages. For example the tag [izu:blog] declares
+a page as a blog (rather than a standard web page.) Such are used once in a file
+and always places on the first line. If you are lazy like me, don't even try to
+remember those, simply create some "template page" based on them and duplicate
+this template each time you need a new Izumi page.
+These are explained below in section 6.
+<p>
+<p>
+<h3>3.5. Automatic linking</h3>
+<p>
+As shown in the first example, any text that refers to a page name
+is automatically rendered as a link to this page. 
+When the page name is composed of several words, spaces are automatically
+inserted between the words.
+<p>
+Several basic tags, described in section 4, allow you to override the
+automatic rendering and control how a link would be displayed -- or not.
+<p>
+<p>
+<h3>3.6. Automatic paragraphs</h3>
+<p>
+When Izumi parses a text file, it automatically consider groups of lines
+as a single paragraph. 
+<p>
+Empty lines are converted into paragraph separators.
+<p>
+This rule is designed to allow you to format lines as you like it in your original
+text file. For example if you use a text editor that does not offer a word-wrap
+feature -- or simply if you do not like such a feature to be activated -- then you
+can split a paragraph in as many lines as you want in your original text and yet
+have those lines automatically concatenated in the rendered page.
+<p>
+Several basic tags, described in section 4, allow you to control how lines
+are slitted or merged.
+<p>
+<p>
+<h3>3.7. HTML is not allowed</h3>
+<p>
+Izumi does not interpret raw HTML tags. The characters "&lt;" and "&gt;" are rendered
+as themselves. That is if you insert "&lt;b&gt;" in a Izumi text file, you will 
+generate exactly this text, not a bold HTML tag.
+<p>
+This feature was original designed for safety reasons -- in case Izumi is used
+a rendered for an online web application, this automatically prevents abuses
+due to HTML code injection.
+<p>
+<hr>
+<h2>4. Basic Tags</h2>
+<p>
+<p>
+All advanced Izumi tags begin and end with brackets, i.e. "[" and "]".
+On the other hand very basic tags which are designed to be used frequently
+do not necessarily follow that convention.
+<p>
+<p>
+<h3>4.1. Common tags</h3>
+<p>
+<pre>
+----
+</pre>
+<blockquote>
+This tag must start exactly at the beginning of the line and be exactly
+composed of 4 dashes. <br>
+It produces an HTML separation, which looks like this:
+</blockquote>
+<table border="0"  width="100%"><tr valign="top"><td  width="25%">
+</td><td  width="50%">
+<hr>
+</td><td  width="25%">
+</td></tr></table>
+<p>
+<p>
+<pre>
+<b> _ _Bold text_ _ </b>
+</pre>
+<blockquote>
+This tag renders the inner <b>text in bold</b>. <br>
+It is composed of two underscore characters before and after the text to be
+put in bold. <br>
+Note that both beginning and end tag must be present on the <i>same</i> line.
+<p>
+<p>
+</blockquote>
+<pre>
+<i> ' 'Italic text' ' </i>
+</pre>
+<blockquote>
+This tag places <i>italics around the inner text</i>. <br>
+It is composed of two quote (') characters before and after the text to be
+put in bold. <br>
+Important: The beginning an end tag is composed of 2 <i>quote (') characters</i>,
+and <b>not</b> double-quotes (").
+Note that both beginning and end tag must be present on the <i>same</i> line.
+<p>
+<p>
+</blockquote>
+Exceptions:
+<ul>
+<li>Both beginning and end tags for italics and bold must appear on the same line. 	Izumi will not try interpret two underscores or two quotes that appear 	alone on a line unless you use the line merging tag as explained below.</li>
+<li>To actually insert pairs of two consecutive underscores in the rendered page 	and not have them interpreted as bold, use three consecutive underscores.</li>
+<li>To actually insert pairs of two consecutive quotes in the rendered page 	and not have them interpreted as italics, use three consecutive quotes.</li>
+<li>It is possible to <b>place <i>italics text</i> inside bold text</b> 	or 	to <i>place <b>bold text</b> inside italics text</i>. 	On the other hand tags must be properly closed in the reverse order they were 	opened, that is you cannot open a bold tag, open an italics tag, close the 	bold tag then the italics. This would render potentially invalid HTML.</li>
+</ul>
+Example:
+<table border="0"  width="100%"><tr valign="top"><td  width="10%">
+</td><td >
+Good:
+</td><td >
+<i> ' 'Open italics <b> _ _Open bold, close bold_ _ </b> close italics' ' </i>
+</td></tr><tr valign="top"><td  width="10%">
+</td><td >
+Bad:
+</td><td >
+<i> ' 'Open italics <b> _ _Open bold, close italics' '</b> </i> <b>close bold_ _ </b> <br>
+(Some web browsers will actually accept this incorrect HTML.)
+</td></tr></table>
+<p>
+<p>
+<h3>4.2. Line endings</h3>
+<p>
+Consecutive lines of text are automatically "glued" together in a single
+paragraph. To start a new paragraph, you must explicitly insert an empty
+line.
+<p>
+This behavior can be altered in the following way:
+<ul>
+<li>You can place a slash (/) or three percentage (%%%) at the end of a line 	to tell Izumi that it is an explicit end of paragraph. If another non 	empty line of text follows, a line break will be insert and the 	next line will be part of a new separated line. 	There can be an arbitrary number of spaces or tabulations after the slash 	or the three percentages.</li>
+<li>You can place a back-slash (\) at the very end of a line to indicate that this 	line should be merged with the next one. 	This is useful in a number of cases since most tags operate on a <i>single</i> 	line of text. For example if you want to break a list item or a bold text into 	several lines, you must end each line with a back-slash. 	Note that the back-slash must be the absolute last character of the line.</li>
+<p>
+</ul>
+Examples:
+<p>
+<table border="0"  width="100%"><tr valign="top"><td  width="10%">
+</td><td  width="40%">
+<pre>
+This is the first line.
+This is the second line.
+We form a single paragraph.
+
+This is the third line.
+This is the fourth line.
+We form a second paragraph.
+</pre>
+</td><td >
+This is the first line.
+This is the second line.
+We form a single paragraph.
+<p>
+This is the third line.
+This is the fourth line.
+We form a second paragraph.
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="40%">
+<hr>
+</td><td >
+<hr>
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="40%">
+<pre>
+This is the first line. / <i> </i>
+This is the second line.
+</pre>
+</td><td >
+This is the first line. <br>
+This is the second line.
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="40%">
+<hr>
+</td><td >
+<hr>
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="40%">
+<pre>
+This italic text ''starts on one \ 
+line and ends'' on another.
+</pre>
+</td><td >
+This italic text <i>starts on one line and ends</i> on another.
+</td></tr></table>
+<p>
+<p>
+<h3>4.3. Lists, blocks and pre-formatted text</h3>
+<p>
+<b>Lists</b>
+<p>
+You can start a bullet list at any time by prefixing a line with an asterisk (*).
+The asterisk becomes a bullet and the rest of the line after the asterisk becomes
+the item's text.
+If the next line also starts with an asterisk, it will become the next bullet item
+and so one.
+The item's text ends with the end of the line. If you want to break the item text
+into several lines, you must end each line with a back-slash character to merge
+them together.
+<p>
+You can create indent lists by using tabulation characters before the asterisk.
+<p>
+Note that there is no special tag to start or end a list.
+Any succession of lines starting with an asterisk at the same indentation level
+is considered part of an ongoing list.
+<p>
+Examples:
+<p>
+<table border="0"  width="100%"><tr valign="top"><td  width="10%">
+</td><td  width="40%">
+<pre>
+* Let's start a list. First item.
+* Second item.
+&lt;tab&gt; * Third item.
+&lt;tab&gt; * Fourth item.
+* Last item of this list.
+</pre>
+</td><td >
+<ul>
+<li>Let's start a list. First item.</li>
+<li>Second item.</li>
+<ul>
+<li>Third item.</li>
+<li>Fourth item.</li>
+</ul>
+<li>Last item of this list.</li>
+</ul>
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="40%">
+<hr>
+</td><td >
+<hr>
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="40%">
+<pre>
+* Here's a list.
+* Merge several lines into a single \ 
+  list item using the merge tag at \ 
+  the end of each line.
+* End the list.
+</pre>
+</td><td >
+<ul>
+<li>Here's a list.</li>
+<li>Merge several lines into a single list item using the merge tag at the 	end of each line.</li>
+</ul>
+</td></tr></table>
+<p>
+<p>
+<p>
+<b>Pre-formatted Text</b>
+<p>
+When the very first character of a line is a space, the line is rendered in
+<i>pre-formatted</i> text, that is using a monospace font. All characters of the
+line are used as-is. Izumi tags using brackets, italics and bold are rendered
+normally. Lists tags are not rendered.
+<p>
+Notes:
+<ul>
+<li>The automatic paragraph rule do not applies. 	Consecutive lines all starting with a space are rendered as separate lines. 	Note also that web browsers will not word-wrap the line automatically.</li>
+<li>You can indent the pre-formatted text by placing one or more tabulations 	<i>after</i> the initial space.</li>
+<li>Pre-formatted text cannot contain lists.</li>
+<p>
+</ul>
+Example:
+<p>
+<table border="0"  width="100%"><tr valign="top"><td  width="10%">
+</td><td >
+<pre>
+This is a normal line.
+This is a another line.
+&lt;space&gt; This is a pre-formatted line.
+&lt;space&gt; This is the following line.
+&lt;space&gt; &lt;tab&gt; Here's an indented block
+&lt;space&gt; &lt;tab&gt; of pre-formatted text.
+&lt;space&gt; * Pre-formatted text cannot contain lists.
+This line is not pre-formatted and is
+part of the next paragraph.
+</pre>
+</td><td >
+This is a normal line.
+This is a another line.
+<pre>
+This is a pre-formatted line.
+This is the following line.
+	Here's an indented block
+	of pre-formatted text.
+* Pre-formatted text cannot contain lists.
+</pre>
+This line is not pre-formatted and is
+part of the next paragraph.
+</td></tr></table>
+<p>
+<p>
+<b>Indentation</b>
+<p>
+Indenting paragraphs (a.k.a. <i>block quotes</i> in HTML's jargon) is simply done
+by prefixing a line with as many tabulations as necessary.
+<p>
+The automatic paragraph rules above applies:
+<ul>
+<li>Consecutive lines that use the same level of indenting tabulations are merged 	into an indented paragraph.</li>
+<li>You can insert a line break inside an indented paragraph by using a slash (/).</li>
+<li>You can create several levels of indentation by using more tabulations.</li>
+<p>
+</ul>
+Lists can be indented use tabulations too.
+<p>
+Example:
+<p>
+<table border="0"  width="100%"><tr valign="top"><td  width="10%">
+</td><td >
+<pre>
+This is a normal line.
+This is a another line.
+&lt;tab&gt; This is an indented paragraph and
+&lt;tab&gt; these two lines are merged together.
+&lt;tab&gt; &lt;tab&gt; Another tabulation creates
+&lt;tab&gt; &lt;tab&gt; another level of indentation
+This line is not indented and is
+part of the next paragraph.
+</pre>
+</td><td >
+This is a normal line.
+This is a another line.
+<blockquote>
+This is an indented paragraph and
+these two lines are merged together.
+<blockquote>
+Another tabulation creates
+another level of indentation
+</blockquote>
+</blockquote>
+This line is not indented and is
+part of the next paragraph.
+</td></tr></table>
+<p>
+<p>
+<h3>4.4. Bracketed tags</h3>
+<p>
+The following tags start and end with brackets, with some exceptions.
+<p>
+Sometimes you want to be able to surround a text with brackets.
+Note that if Izumi does not recognize a tag, it will simply render the
+bracketed expression as is. So for example "foo" is not an Izumi tag
+nor an Izumi page name thus the text "[foo]" will be rendered unmodified.
+On the other hand "c" is a bracketed tag used as "[c]".
+In order to be able to render "[c]" in the final page, you simply
+need to use two opening brackets and one closing bracket as in "[[c]".
+<p>
+Examples:
+<p>
+<table border="0"  width="100%"><tr valign="top"><td  width="10%">
+</td><td  width="20%">
+<pre>
+[not an Izumi tag]
+</pre>
+</td><td  width="80%">
+[not an Izumi tag]
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="20%">
+<pre>
+[c]
+</pre>
+</td><td  width="80%">
+&lt;center&gt;
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="20%">
+<pre>
+[[c]
+</pre>
+</td><td  width="80%">
+[c]
+</td></tr></table>
+<p>
+<p>
+<h3>4.5. Centering</h3>
+<p>
+You can center a one-line paragraph by adding the special tag "[c]" 
+at the beginning of the line. If the text you want to center is composed
+of several lines, you must merge the lines together using a back-slash.
+<p>
+<p>
+<h3>4.6. External links & images</h3>
+<p>
+Unbracketed "http://" or "ftp://" link are automatically converted into
+clickable links. <br>
+The text of the link will be the link itself, even if the pointed element
+is an image. <br>
+The following limitations apply:
+<ul>
+<li>The link cannot contain quotes</li>
+<li>It cannot be surrounded by quotes nor brackets nor angle brackets (&lt; &gt;)</li>
+<li>It cannot be prefixed by empty brackets pairs () nor the pipe sign (|).</li>
+<p>
+</ul>
+All these limitations are enforced to make sure you can control how links
+are rendered when using the bracketed forms, as follows:
+<p>
+<p>
+<pre>
+<b>[</b><i>http://www.example.com/myimage.gif</i><b>]</b>
+</pre>
+<blockquote>
+This form inserts an image in the rendered output.
+The image does not have any alternate text. <br>
+The recognized extensions are gif, jpeg, jpg, png and svg. <br>
+The HTTP prefix can be "http" or  "https". "ftp" is not supported.
+<p>
+<p>
+</blockquote>
+<pre>
+<b>[</b><i>alternate text</i><b>|</b><i>http://www.example.com/myimage.gif</i><b>]</b>
+</pre>
+<blockquote>
+This form inserts an image in the rendered output with the specific
+alternate text. The alternate text cannot contain the pipe (|) character.<br>
+The recognized extensions are gif, jpeg, jpg, png and svg. <br>
+The HTTP prefix can be "http" or  "https". "ftp" is not supported.
+<p>
+<p>
+</blockquote>
+<pre>
+<b>[</b><i>http://www.example.com/somepage.html</i><b>]</b>
+</pre>
+<blockquote>
+This form inserts a clickable link in the rendered output.
+The text of the link is the link itself. <br>
+The HTTP prefix can be "http", "https" or "ftp" 
+or it can be an HTML page anchor ("#anchor").
+<p>
+<p>
+</blockquote>
+<pre>
+<b>[</b><i>name of the link</i><b>|</b><i>http://www.example.com/somepage.html</i><b>]</b>
+</pre>
+<blockquote>
+This form inserts a named clickable link in the rendered output. <br>
+The first part of the tag defines the link text 
+and cannot contain the pipe (|) character.<br>
+The HTTP prefix can be "http", "https" or "ftp" 
+or it can be an HTML page anchor ("#anchor").
+<p>
+<p>
+</blockquote>
+Examples:
+<p>
+<table border="0" ><tr valign="top"><td >
+Unbracketed links:
+</td><td  width="2%">
+</td><td >
+<pre>
+<i>http://</i>www.example.com/somepage.html
+<i>http://</i>www.example.com/myimage.gif
+</pre>
+</td><td  width="2%">
+</td><td >
+<a href="http://www.example.com/somepage.html">http://www.example.com/somepage.html</a> <br>
+<a href="http://www.example.com/myimage.gif">http://www.example.com/myimage.gif</a>
+</td></tr><tr valign="top"><td >
+Image Tags:
+</td><td  width="2%">
+</td><td >
+With alternate text:
+<pre>
+[Izumi Logo|http://www.alfray.com/projects/Izumi/img/izu_small.jpg]
+</pre>
+</td><td  width="2%">
+</td><td >
+<img alt="Izumi Logo" title="Izumi Logo" src="http://www.alfray.com/projects/Izumi/img/izu_small.jpg">
+</td></tr><tr valign="top"><td >
+</td><td  width="2%">
+</td><td >
+Without alternate text:
+<pre>
+[http://www.alfray.com/projects/Izumi/img/izu_small.jpg]
+</pre>
+</td><td  width="2%">
+</td><td >
+<img src="http://www.alfray.com/projects/Izumi/img/izu_small.jpg">
+</td></tr><tr valign="top"><td >
+Link Tags:
+</td><td  width="2%">
+</td><td >
+<pre>
+[This is a link|http://www.example.com/somepage.html]
+[Click me please!|http://www.example.com/somepage.html]
+[http://www.example.com/somepage.html]
+</pre>
+</td><td  width="2%">
+</td><td >
+<a href="http://www.example.com/somepage.html">This is a link</a> <br>
+<a href="http://www.example.com/somepage.html">Click me please!</a> <br>
+<a href="http://www.example.com/somepage.html">http://www.example.com/somepage.html</a>
+</td></tr></table>
+<p>
+Note that to include images the special Izumi tag <i>[izu:image:...]</i> provides
+a lot more control and allows for a link to be associated with the image.
+It is described in the advanced tags section.
+<p>
+<p>
+<h3>4.7. Internal links</h3>
+<p>
+Most of the time you will want to link to other Izumi pages of your
+own Izumi content -- this is called "internal linking".
+Several tags make this very easy.
+<p>
+Izumi provides automatic linking: words that look like Izumi
+pages name, that is that follow the "CamelConvention" or single
+words starting with an upper case letter are potential candidates
+for being automatically transformed into links onto a similar named
+page. This will only actually happen if there <i>is</i> a page with the
+same name.
+<p>
+Note: Izumi is not a "wiki". In traditional wikis, <i>any</i> word that
+follows their naming convention is automatically transformed into a
+page links even if no page exist with that name (the link then allows
+the user to create the page.) Izumi does not provide online edition
+and thus does not have this behavior.
+<p>
+To better control how Izumi renders internal links, you can surround the
+page name with brackets.
+<p>
+Here is the exhaustive list of formats available:
+<p>
+<p>
+<pre>
+<i>MyPage</i>
+<i>PageNameInCamelNotation</i>
+</pre>
+<blockquote>
+This will create links to the corresponding page if it exist. <br>
+For example "MyPage" will link to "index.php/MyPage" and will display
+the content of the file "MyPage.izu". <br>
+The page name must be composed of multiple words such as PageNameInCamelNotation,
+and it will be displayed with spaces separating the words, for
+example "Page Name In Camel Notation". <br>
+If there is no file with the adequate name, the text will be displayed
+as-is, without the modifications.
+<p>
+Exceptions:
+</blockquote>
+<ul>
+<ul>
+<li>The page name must not be surrounded by space, !, comma, tab or punctuation.</li>
+<li>You can prefix the page with "" to prevent auto-linking.</li>
+<p>
+<p>
+</ul>
+</ul>
+<pre>
+<b>[</b><i>Page</i><b>]</b>
+<b>[</b><i>PageNameInCamelNotation</i><b>]</b>
+<b>[</b><i>Directory/SubDirectory/PageName</i><b>]</b>
+</pre>
+<blockquote>
+This will create links to the corresponding pages if they exist. <br>
+For example [Page] will link to "index.php/Page" and will display
+the content of the file "Page.izu".
+In the case of a multi-word page name such as [PageNameInCamelNotation],
+the name will be displayed with spaces separating the words, for
+example "Page Name In Camel Notation". <br>
+If there is no file with the adequate name, the internal text of the
+tag will be displayed as-is, without the surrounding quotes.
+<p>
+<p>
+</blockquote>
+<pre>
+<b>[</b><i>Link Title</i><b>|</b><i>Page</i><b>]</b>
+<b>[</b><i>Link Title</i><b>|</b><i>PageNameInCamelNotation</i><b>]</b>
+<b>[</b><i>Link Title</i><b>|</b><i>Directory/SubDirectory/PageName</i><b>]</b>
+</pre>
+<blockquote>
+This will <i>force</i> creation of links to the corresponding page name,
+<i>even</i> if they do not exist. The link will be displayed with the
+corresponding link title.<br>
+<p>
+In this format, you can also append an HTML anchor to the page name,
+that is an expression in the form "#anchor_name". The anchor name
+accept alphabetic and numeric characters as well as underscores.
+<p>
+</blockquote>
+<pre>
+<b>[</b><i>Link Title</i><b>| ]</b>
+</pre>
+<blockquote>
+This special form always links to the root of your Izumi content,
+that is the equivalent of "index.php". <br>
+The characters | and ] should be joined.
+<p>
+<p>
+</blockquote>
+<hr>
+<h2>5. Advanced Tags</h2>
+<p>
+<p>
+<h3>5.1. HTML Heading &lt;h<i>n</i>&gt;</h3>
+<p>
+You can create "HTML heading tags" (a.k.a. &lt;h1&gt;..&lt;h9&gt;)
+by simply using one of
+[h1], [h2], [h3], [h4], [h5], [h6], [h7], [h8] or [h9].
+<p>
+<p>
+<h3>5.2. Numbered Heading Titles</h3>
+<p>
+It is frequent that one wants to use HTML &lt;h1&gt;..&lt;h3&gt; tags to create
+numbered headings in a document. This document for example
+as sections (such as "5. Advanced Tags") with sub-sections ("5.2. etc.)
+<p>
+Izumi provides a simple way to do that up to 3 levels by using the following tags:
+<p>
+<pre>
+<i>n</i><b>.</b>&lt;tab&gt;<i>Title Level 1</i>
+<i>n</i><b>.</b><i>m</i><b>.</b>&lt;tab&gt;<i>Title Level 2</i>
+<i>n</i><b>.</b><i>m</i><b>.</b><i>p</i><b>.</b>&lt;tab&gt;<i>Title Level 3</i>
+</pre>
+where <i>n</i>, <i>m</i> and <i>p</i> must be digits between 0 and 9, included,
+and must be the first character of the line. A dot is needed after each
+digit and exactly one tab must separate the heading number from the title.
+<p>
+Example:
+<p>
+<table border="0"  width="100%"><tr valign="top"><td  width="10%">
+</td><td  width="45%">
+<pre>
+1.&lt;tab&gt;Title Level 1
+1.1.&lt;tab&gt;Title Level 2
+1.1.1.&lt;tab&gt;Title Level 3
+1.1.2.&lt;tab&gt;Title Level 3
+2.&lt;tab&gt;Title Level 1
+3.&lt;tab&gt;Title Level 1
+3.1.&lt;tab&gt;Title Level 2
+3.1.1.&lt;tab&gt;Title Level 3
+</pre>
+</td><td  width="45%">
+<h2>1. Title Level 1</h2>
+<h3>1.1. Title Level 2</h3>
+<h4>1.1.1. Title Level 3</h4>
+<h4>1.1.2. Title Level 3</h4>
+<h2>2. Title Level 1</h2>
+<h2>3. Title Level 1</h2>
+<h3>3.1. Title Level 2</h3>
+<h4>3.1.1. Title Level 3</h4>
+</td></tr></table>
+<p>
+<p>
+5.3. HTML Anchors
+<p>
+<p>
+<pre>
+<b>[</b>a:<i>name</i><b>]</b>
+</pre>
+<blockquote>
+Declares an HTML anchor.
+The anchor name can be composed of lower-case or upper-case letters (<i>a</i>..<i>z</i>),
+digits (<i>0</i>..<i>9</i>) and underscore.
+<p>
+</blockquote>
+<pre>
+<b>[#</b><i>name</i><b>]</b>
+</pre>
+<blockquote>
+Creates a link to an HTML anchor.
+The anchor name can be composed of lower-case or upper-case letters (<i>a</i>..<i>z</i>),
+digits (<i>0</i>..<i>9</i>) and underscore.
+<p>
+</blockquote>
+Note that internal and external links, as described in the previous section, can
+also specify an HTML anchor name.
+<p>
+<p>
+<h3>5.4. Table Management</h3>
+<p>
+Izumi has a simplified syntax to create <i>simple</i> HTML tables.
+<p>
+HTML tables can have extremely complicated formatting, with tables inside tables,
+column and row spans, horizontal and vertical alignment, etc. Izumi does not
+currently provide support for most of these. Instead it always generates
+tables with the following parameters:
+<ul>
+<li>Cells are vertically aligned to the top.</li>
+<li>The table has no border.</li>
+<p>
+</ul>
+The only control that Izumi gives you is the possibility to select the
+overall width of the table as well as the width of the columns.
+<p>
+The following tags define a table:
+<p>
+<pre>
+<b>[</b>table<b>:</b>begin<b>:</b><i>table width</i><b>:</b><i>col 1 width</i><b>:</b><i>col 2 width</i><b>:</b>..<b>:</b><i>col N width</i><b>]</b>
+</pre>
+<blockquote>
+This tag starts a table.
+It also automatically creates the first row and the first column.
+There can be an infinite number of the "col <i>n</i> width arguments.
+They are all optional, as is the <i>table width</i> argument.
+The width is transcribed as-is in the rendered HTML and is typically
+a number (representing a pixel size) or a number followed by %
+(to represent a percentage.)
+<p>
+</blockquote>
+<pre>
+<b>[</b>col<b>]</b>
+</pre>
+<blockquote>
+This tag starts a new column.
+<p>
+</blockquote>
+<pre>
+<b>[</b>row<b>]</b>
+</pre>
+<blockquote>
+This tag starts a new row.
+It also automatically creates the first column.
+<p>
+</blockquote>
+<pre>
+<b>[</b>table<b>:</b>end<b>]</b>
+</pre>
+<blockquote>
+This tag ends a table.
+It closes automatically closes the last column and row.
+<p>
+<p>
+</blockquote>
+Here are some limitations and common sense remarks related to the table support:
+<ul>
+<li>It is best to put the table-related tags alone on their own line.</li>
+<li>It is absolutely not supported to use more than one table tag per line. 	If you try, you will probably get confusing results.</li>
+<li>It is best to be consistent with the number of columns used in each row. 	Most browsers can cope with an inconsistent number of columns, although 	the resulting behavior will definitely be browser-specific.</li>
+<li>Tables can be nested.</li>
+<p>
+</ul>
+Examples:
+<p>
+<table border="0"  width="100%"><tr valign="top"><td  width="10%">
+</td><td  width="45%">
+<pre>
+[table:begin]
+A table with one row and one column
+[table:end]
+</pre>
+</td><td  width="45%">
+<table border="0" ><tr valign="top"><td >
+A table with one row and one column
+</td></tr></table>
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="45%">
+<hr>
+</td><td  width="45%">
+<hr>
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="45%">
+<pre>
+[table:begin]
+One
+[col]
+Two
+[row]
+Three
+[col]
+Four
+[table:end]
+</pre>
+</td><td  width="45%">
+<table border="0" ><tr valign="top"><td >
+One
+</td><td >
+Two
+</td></tr><tr valign="top"><td >
+Three
+</td><td >
+Four
+</td></tr></table>
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="45%">
+<hr>
+</td><td  width="45%">
+<hr>
+</td></tr><tr valign="top"><td  width="10%">
+</td><td  width="45%">
+<pre>
+[table:begin:100%:25%:50%:25%]
+One
+[col]
+This column is half the width
+[col]
+Three
+[row]
+Four
+[col]
+This column is half the width
+[col]
+Six
+[table:end]
+</pre>
+</td><td  width="45%">
+<table border="0"  width="100%"><tr valign="top"><td  width="25%">
+One
+</td><td  width="50%">
+This column is half the width
+</td><td  width="25%">
+Three
+</td></tr><tr valign="top"><td  width="25%">
+Four
+</td><td  width="50%">
+This column is half the width
+</td><td  width="25%">
+Six
+</td></tr></table>
+</td></tr></table>
+<p>
+<p>
+<h3>5.5. Advanced Image Tag</h3>
+<p>
+If the basic tags section was presented how to insert images simply
+by specifying the image URL surrounded by brackets, with an optional
+alternate label.
+<p>
+Izumi has a specific tag to insert tables which provides more control:
+<ul>
+<li>The image can be a link.</li>
+<li>You can control the alignment of the image.</li>
+<p>
+</ul>
+The tag is the following:
+<p>
+<pre>
+<b>[</b>izu:image:<b><i>url_img</i></b>,__<i>align=blah</i><b>|</b><i>url_link</i><b>:</b><i>alt-label</i><b>]</b>
+</pre>
+<blockquote>
+The <i>url_img</i> can either start with <i>http</i>, <i>https</i>, <i>ftp</i> or
+simply be a relative URL, in which case it is relative to the server directory
+containing the Izumi <i>my-content</i>. <br>
+The second argument, which starts with a comma, is optional.
+If present it allows you to specify the image alignment: <i>align=right</i> or <i>align=left</i>.
+You do not need the comma if the argument is omitted. <br>
+The third argument, which starts with a pipe (|) character, is optional too.
+When present it specify the link which the image points to.
+The <i>url_link</i> can start with <i>http</i>, <i>https</i>, <i>ftp</i> and represents an
+external link (that is it cannot be an Izumi internal link.).
+You do not need the pipe character if the argument is omitted. <br>
+The last argument, also optional, starts with a colon (:) and when
+present specifies the image alternate text.
+You do not need the colon character if the argument is omitted.
+<p>
+</blockquote>
+Examples
+<p>
+<pre>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>]  <img src="http://izumi.alfray.com/img/izu_small.jpg" align="abscenter"/>
+<p>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>,align=right]  <img src="http://izumi.alfray.com/img/izu_small.jpg" align="right"/>
+<p>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>,align=right|<i>http://izumi.alfray.com</i>]  <a href="http://izumi.alfray.com"><img src="http://izumi.alfray.com/img/izu_small.jpg" align="right" border="0"/></a>
+<p>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>,align=right|<i>http://izumi.alfray.com</i>:Welcome to Izumi!]  <a href="http://izumi.alfray.com"><img src="http://izumi.alfray.com/img/izu_small.jpg" align="right" alt="Welcome to Izumi!" title="Welcome to Izumi!" border="0"/></a>
+<p>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>|<i>http://izumi.alfray.com</i>]  <a href="http://izumi.alfray.com"><img src="http://izumi.alfray.com/img/izu_small.jpg" align="abscenter" border="0"/></a>
+<p>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>|<i>http://izumi.alfray.com</i>:Welcome to Izumi!]  <a href="http://izumi.alfray.com"><img src="http://izumi.alfray.com/img/izu_small.jpg" align="abscenter" alt="Welcome to Izumi!" title="Welcome to Izumi!" border="0"/></a>
+<p>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>:Welcome to Izumi!]  <img src="http://izumi.alfray.com/img/izu_small.jpg" align="abscenter" alt="Welcome to Izumi!" title="Welcome to Izumi!"/>
+<p>
+<p>
+</pre>
+<h3>5.6. Izumi comments</h3>
+<p>
+<pre>
+<b>[!--</b>   ...(lines of text)...   <b>--]</b>
+</pre>
+<blockquote>
+This pair of tags can be used to comment out (and thus hide from output)
+a whole chunk of an Izumi file.
+<p>
+<p>
+</blockquote>
+Details:
+<ul>
+<li>The start and end comment tags can appear anywhere in a text line.</li>
+<li>They can be on the same line.</li>
+<li>Anything before the start comment tag is output as usual.</li>
+<li>Anything after the end comment tag is output as usual.</li>
+<li>When more than one line of text is removed, a paragraph separator will 	be inserted in the output.</li>
+<li>Comment tags cannot be nested.</li>
+<p>
+<p>
+</ul>
+<hr>
+<h2>6. Izumi Specific Tags</h2>
+<p>
+<p>
+<h3>6.1. Tags that must be on the first line</h3>
+<p>
+These tags must be present on the <i>first</i> line of your Izumi file.
+They will be ignored and automatically discarded if present in any other line.
+Each of these tag can only occur once.
+On the other hand you can place as many as you want in the first line
+up to a limit of 1023 characters.
+<p>
+Unlike Izumi rendering tags, you cannot merge the first line with the following
+using the back-slash character. Also you cannot use a double-opening bracket
+to invalidate a tag (yet you can simply use the fact that any unknown tag
+will simply be ignored.)
+<p>
+<pre>
+<b>[izu:refuse]</b>
+</pre>
+<blockquote>
+This tag tells Izumi to refuse serving your file.
+Trying to access the file will either generate a 404 Not Found or
+more adequately display the "Index.izu" of the directory, if any.
+<p>
+</blockquote>
+<pre>
+<b>[izu:html-charset:</b><i>xxx</i><b>]</b>
+</pre>
+<blockquote>
+where <i>xxx</i> can be any HTML-savvy charset name, such as UTF-8 or ISO-8859-1.
+Izumi does not perform nay character set translation -- it expects your
+file to be encoded using the same charset.
+The charset name is passed in both the HTML and HTTP headers.
+<p>
+</blockquote>
+<pre>
+<b>[izu:html-lang:</b><i>xxx</i><b>]</b>
+</pre>
+<blockquote>
+where <i>xxx</i> can be any HTML-savvy language name, such as 'en-US' or 'fr-FR'.
+The language name is passed in the HTML headers.
+<p>
+</blockquote>
+<pre>
+<b>[izu:blog]</b>
+</pre>
+<blockquote>
+This tag tells Izumi this file represents a blog master file
+and as such as a special handling as explained later.
+<p>
+<p>
+</blockquote>
+<h3>6.2. Tags that can appear anywhere</h3>
+<p>
+<pre>
+<b>[izu:enscript-file:</b><i>filename</i><b>]</b>
+</pre>
+<blockquote>
+This file processes the given filename (which path relative to the Izumi file)
+with the unix command <i>enscript</i> and directly dump the output to the
+rendered file.
+<p>
+</blockquote>
+<i>Note</i>: This tag <i>must</i> not be used in blog entries.
+<p>
+<p>
+<h3>6.3. Blog Tags</h3>
+<p>
+To create a blog master file, you need these two tags:
+<p>
+<pre>
+<b>[izu:blog]</b>
+</pre>
+<blockquote>
+This tag tells Izumi this file represents a blog master file
+and as such as a special handling.
+<p>
+</blockquote>
+<pre>
+<b>[s:</b><i>date</i><b>:</b><i>title</i><b>]</b>
+</pre>
+<blockquote>
+This create a new entry (a.k.a. "section") in a blog master file.
+<p>
+</blockquote>
+<pre>
+<b>[izu:header:--</b>   ...(lines of text)...   <b>--]</b>
+</pre>
+<blockquote>
+This pair of tags delimits text that will be automatically
+inserted in every blog entry.
+<p>
+</blockquote>
+The following optional tags are generally of little use except
+in very peculiar cases which won't be described in detail here:
+<p>
+<pre>
+<b>[izu:blog-refs:</b><i>References, comma separated</i><b>]</b>
+</pre>
+<blockquote>
+This special tag insert references to other blogs in the header
+of blog entries. The <i>references</i> must a comma separated list
+of blog names, in the form "BlogPageName" or "Title|BlogPageName".
+<p>
+</blockquote>
+<pre>
+<b>[izu:permalink:</b><i>mode</i><b>:</b><i>title</i><b>:</b><i>key</i><b>]</b>
+</pre>
+<blockquote>
+This special tag insert a "permanent link" (a.k.a. permalink) to
+a given entry of the current blog. <br>
+<i>mode</i> must be one of <i>br</i> or <i>hr</i> or nothing and indicates
+how the HTML is to be closed. <br>
+<i>title</i> is the linked text which will appear in the rendered page.
+<i>key</i> is the permalink MD5 key or the <i>rss</i> special name.
+<p>
+</blockquote>
+<hr>
+<p>
+<center><br>
+		<table width="100%" bgcolor="#77AA77"><tr><td>
+			<font color="#FFFF77"><center>
+				<b>Site License</b>			</center></font>
+		</td></tr></table>
+	<p>
+<!-- Creative Commons License -->
+<a href="http://creativecommons.org/licenses/by-nd-nc/1.0/"><img alt="Creative Commons License" border="0" src="http://creativecommons.org/images/public/somerights.gif" /></a><br />
+This work is licensed by Rapha&euml;l Moll under a <a href="http://creativecommons.org/licenses/by-nd-nc/1.0/">Creative Commons License</a>.
+<!-- /Creative Commons License -->
+<!--
+<rdf:RDF xmlns="http://web.resource.org/cc/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+<Work rdf:about="">
+   <dc:title>R'alf Izumi</dc:title>
+   <dc:description>Izumi is a random collection of thoughts, almost but not quite a weblog.</dc:description>
+   <dc:creator><Agent>
+      <dc:title>Raphael MOLL</dc:title>
+   </Agent></dc:creator>
+   <dc:type rdf:resource="http://purl.org/dc/dcmitype/Text" />
+   <license rdf:resource="http://creativecommons.org/licenses/by-nd-nc/1.0/" />
+</Work>
+<License rdf:about="http://creativecommons.org/licenses/by-nd-nc/1.0/">
+   <permits rdf:resource="http://web.resource.org/cc/Reproduction" />
+   <permits rdf:resource="http://web.resource.org/cc/Distribution" />
+   <requires rdf:resource="http://web.resource.org/cc/Notice" />
+   <requires rdf:resource="http://web.resource.org/cc/Attribution" />
+   <prohibits rdf:resource="http://web.resource.org/cc/CommercialUse" />
+</License>
+</rdf:RDF>
+-->
+<p>
+		<table width="100%" bgcolor="#77AA77"><tr><td>
+			<font color="#FFFF77"><center>
+				<b>Options</b>			</center></font>
+		</td></tr></table>
+	<table><tr><td align="right"><a name="theme">Color Theme:</td><td> 
+<a href="http://ralf.alfray.com/.izumi/IzumiTextSyntax?theme=gray#theme">Gray</a>
+&nbsp;|&nbsp;<a href="http://ralf.alfray.com/.izumi/IzumiTextSyntax?theme=blue#theme">Blue</a>
+&nbsp;|&nbsp;Black&nbsp;|&nbsp;<a href="http://ralf.alfray.com/.izumi/IzumiTextSyntax?theme=sand#theme">Sand</a>
+&nbsp;|&nbsp;<a href="http://ralf.alfray.com/.izumi/IzumiTextSyntax?theme=khaki#theme">Khaki</a>
+&nbsp;|&nbsp;<a href="http://ralf.alfray.com/.izumi/IzumiTextSyntax?theme=egg#theme">Egg</a>
+&nbsp;|&nbsp;<a href="http://ralf.alfray.com/.izumi/IzumiTextSyntax?theme=none#theme">None</a>
+</td></tr><tr><td colspan="2"  height="2" bgcolor="#77AA77"></td></tr></table>
+<p><table border="0"><tr><td>
+		<!-- SiteSearch Google -->
+		<form method=get action="http://www.google.com/search" style="padding: 0px; margin: 0px; border: none">
+			<input type=hidden name=ie value=UTF-8 >
+			<input type=hidden name=oe value=UTF-8 >
+		
+		<table border="0">
+		<tr>
+			<td colspan="2">
+				<input type=text name=q size=30 maxlength=255 value="">
+				<input type=submit name=btnG value="Search">
+			</td>
+		</tr>
+		<tr>
+			<td align="left">
+				<font size=-1>
+				<input type=hidden name=domains value="ralf.alfray.com">
+				<input type=radio name=sitesearch value=""> Web 
+				<input type=radio name=sitesearch value="ralf.alfray.com" checked> ralf.alfray.com 
+				</font>
+			</td>
+			<td align="right">
+				<a href="http://www.google.com/"><img src="http://www.google.com/logos/Logo_25blk.gif" 
+					border="0" alt="Powered by Google" name="Powered by Google" align="absmiddle"></a>
+			</td>
+		</tr>
+		</table>
+		</form>
+		<!-- SiteSearch Google -->
+
+	</td></tr>
+<tr><td height="2" bgcolor="#77AA77"></td></tr></table><p>
+<a name="credits" href="http://ralf.alfray.com/.izumi/IzumiTextSyntax?credits=on#credits" target="_top">Display Izumi & PHP Credits</a><br><p>		<table width="100%" bgcolor="#77AA77"><tr><td>
+			<font color="#FFFF77"><center>
+				<b>Stats</b>			</center></font>
+		</td></tr></table>
+	572 accesses, 6 accesses from 198.144.201.20
+<br>Visited 72 times by <a href="http://www.google.com">Google</a>, last 2004/11/30 22:55
+<br>Visited 11 times by <a href="http://www.yahoo.com/">Yahoo!</a>, last 2004/12/05 09:21
+<br>Visited 3 times by <a href="http://www.alexa.com/">Alexa</a>, last 2004/12/06 14:02
+<br>Visited 212 times by <a href="http://search.msn.com/">MSN</a>, last 2004/11/28 06:35<p>		<table width="100%" bgcolor="#77AA77"><tr><td>
+			<center><font size="-1" color="#FFFF77">
+				&lt;
+				Generated in 1.42 seconds the <i>12/08/2004, 11:56 PM</i> by <i>Izumi 0.9.3</i>				&gt;
+			</font></center>
+		</td></tr></table>
+	</center>
+</body>
+</html>

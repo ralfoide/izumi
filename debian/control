@@ -1,0 +1,22 @@
+Source: izumi
+Section: web
+Priority: optional
+Maintainer: Raphael Moll <webralf@alfray.com>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.6.1
+
+Package: izumi
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, apache | apache-ssl | apache-perl | apache2, php4 | php4-cgi | apache-mod-php4 | libapache2-mod-php4
+Description: A simple web site content management system
+ Izumi is a simple web site content management system with blogging
+ capabilities. The content is described using text files with a wiki-like
+ syntax and is ideally suited to be modified directly on the server using
+ a text editor. The content is rendered as full-formatted web pages
+ and it the case of blogs can also be rendered as an RSS stream.
+ Access logs (Combined Log Format) and in-page online stats are provided.
+ An HTML and RSS caching mechanism is present to reduce the server load as
+ well as full support of HTTP ETags and 304 Not Modified.
+ .
+ More information at http://izumi.alfray.com
+

@@ -1,0 +1,26 @@
+izumi (0.9.4-0) unstable; urgency=low
+
+  * New minor features: blog previous links, izu:ip-deny.
+
+ -- Raphael Moll <ralf@alfray.com>  Sun, 19 Dec 2004 23:07:27 -0800
+
+izumi (0.9.3-2) unstable; urgency=low
+
+  * Working debian package (tested on a clean sarge with Apache 2.0.)
+
+ -- Raphael Moll <webralf@alfray.com>  Thu,  9 Dec 2004 11:53:51 -0800
+
+izumi (0.9.3-1) unstable; urgency=low
+
+  * Source cleanup.
+  * Experimental Debian Package.
+
+ -- Raphael Moll <webralf@alfray.com>  Sat, 04 Dec 2004 14:30:09 -0800
+
+izumi (0.9.2-1) unstable; urgency=low
+
+  * Initial Release.
+  * Experimental Debian Package.
+
+ -- Raphael Moll <webralf@alfray.com>  Sat,  4 Dec 2004 11:50:17 -0800
+

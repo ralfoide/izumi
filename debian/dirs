@@ -1,0 +1,9 @@
+/etc/izumi
+/usr/share/doc/izumi
+/usr/share/izumi/site
+/usr/share/izumi/settings
+/var/www/izumi/my-content
+/var/www/izumi/my-images
+/var/log/izumi
+/var/cache/izumi/cache
+/var/cache/izumi/options

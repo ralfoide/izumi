@@ -1,0 +1,116 @@
+#!/bin/sh
+
+# $Id$
+# RM 20041204 postint file from gallery adapted for izumi
+
+set -e
+
+# export DEBCONF_DEBUG=developer
+
+. /usr/share/debconf/confmodule
+db_version 2.0 || [ $? -lt 30 ]
+
+
+if [ "$1" = "configure" ]; then
+
+	# RM 20041208 fix log & cache folders, doesn't seem to work when placed in debian/rules
+	install -m 755 -o www-data -d /var/log/izumi
+	install -m 755 -o www-data -d /var/cache/izumi/cache
+	install -m 755 -o www-data -d /var/cache/izumi/options
+
+
+	# Configure web servers as requested. Inspired from Gallery's postinst
+
+    db_get izumi/webserver
+	webservers="$RET"
+    restart=""
+
+    for webserver in $webservers; do
+        webserver=${webserver%,}
+		test -x /usr/sbin/$webserver || continue
+
+        case "$webserver" in
+            apache|apache-perl|apache-ssl)
+                if [ -x /usr/sbin/modules-config ]; then
+                    if [ -f /usr/lib/apache/1.3/libphp4.so ]; then
+                        if ! grep -qs "^LoadModule php4_module " /etc/$webserver/modules.conf; then
+                            modules-config $webserver enable mod_php4
+                        fi
+                    else
+                        if [ -f /usr/lib/apache/1.3/mod_actions.so ]; then
+                            if ! grep -qs "^LoadModule action_module " /etc/$webserver/modules.conf; then
+                                modules-config $webserver enable mod_actions
+                            fi
+                        fi
+                        if [ -f /usr/lib/apache/1.3/mod_cgi.so ]; then
+                            if ! grep -qs "^LoadModule cgi_module " /etc/$webserver/modules.conf; then
+                                modules-config $webserver enable mod_cgi
+                            fi
+                        fi
+                    fi
+                fi
+                if grep -qs "^Include /etc/izumi/apache.conf" /etc/$webserver/httpd.conf; then
+                    mv -f /etc/$webserver/httpd.conf /etc/$webserver/httpd.conf.old.izumi
+                    grep -v "^Include /etc/izumi/apache.conf" /etc/$webserver/httpd.conf.old.izumi > /etc/$webserver/httpd.conf
+                fi
+                if ! grep -qs "^Include /etc/$webserver/conf.d" /etc/$webserver/httpd.conf; then
+                    cp -f /etc/$webserver/httpd.conf /etc/$webserver/httpd.conf.old.izumi
+                    echo "Include /etc/$webserver/conf.d" >> /etc/$webserver/httpd.conf
+                fi
+                if [ -f /etc/$webserver/httpd.conf.old.izumi ]; then
+                    mv -f /etc/$webserver/httpd.conf.old.izumi /etc/$webserver/httpd.conf.old
+                fi
+                mkdir -p /etc/$webserver/conf.d
+                ;;
+            apache2)
+                if [ -d /etc/$webserver/mods-enabled ]; then
+                    if [ ! -f /etc/$webserver/mods-enabled/actions.load -a ! -h /etc/$webserver/mods-enabled/actions.load ]; then
+                        ln -s /etc/$webserver/mods-available/actions.load /etc/$webserver/mods-enabled/actions.load
+                    fi
+                    if [ -f /etc/apache2/mods-available/php4.load ]; then
+                        if [ ! -f /etc/$webserver/mods-enabled/php4.load -a ! -h /etc/$webserver/mods-enabled/php4.load ]; then
+                            ln -s /etc/$webserver/mods-available/php4.load /etc/$webserver/mods-enabled/php4.load
+                        fi
+                    else
+                        if [ ! -f /etc/$webserver/mods-enabled/cgi.load -a ! -h /etc/$webserver/mods-enabled/cgi.load ]; then
+                            ln -s /etc/$webserver/mods-available/cgi.load /etc/$webserver/mods-enabled/cgi.load
+                        fi
+                    fi
+                fi
+                ;;
+        esac
+
+        case "$webserver" in
+            apache|apache-perl|apache-ssl|apache2)
+                if [ ! -f /etc/$webserver/conf.d/izumi -a ! -h /etc/$webserver/conf.d/izumi ]; then
+                    ln -s /etc/izumi/apache.conf /etc/$webserver/conf.d/izumi
+                fi
+                db_reset izumi/restart || true
+                db_subst izumi/restart webserver "$webserver"
+                db_input high izumi/restart || true
+                db_go
+                db_get izumi/restart
+                if [ "$RET" = "true" ]; then
+                    restart="$restart $webserver"
+                fi
+                ;;
+        esac
+    done
+
+    for webserver in $restart; do
+        webserver=${webserver%,}
+        if [ -x /usr/sbin/invoke-rc.d ]; then
+            invoke-rc.d $webserver restart
+        else
+            /etc/init.d/$webserver restart
+        fi
+    done
+fi
+
+
+
+#DEBHELPER#
+
+
+
+

@@ -1,0 +1,239 @@
+/* vim: set tabstop=4 shiftwidth=4: */
+//************************************************************************
+/*
+	$Id$
+
+	Copyright 2004, Raphael MOLL.
+
+	This file is part of Izumi.
+
+	Izumi is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
+
+	Izumi is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with Izumi; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+*/
+//************************************************************************
+
+Izumi To Do List
+----------------
+
+This live document describes tasks and priorities.
+The file's format is described at the end.
+
+
+==== Izumi :: Features ========================================
+
+Summary of features for Izumi:
+
+TBDL
+
+
+==== Izumi :: Generic ========================================
+
+-- todo --
+
+[future]
+
+20041121 [1.N] Test version 0.9 live and move to 1.0 if deemed stable enough.
+20041121 [1.N] Build packages for distribution
+20041121 [1.N] Build project page for distribution
+
+20041121 [2.N] Build RPM package
+
+20041121 [9.N] Optional: Localization
+20041121 [9.N] Optional: Automatic locale depending on http-language-accept
+
+
+-- done --
+
+[0.9.4]
+
+20041219 [1.F] Source: Added previous articles links in each blog article.
+
+[0.9.3]
+
+20041213 [1.F] Source: Hacked support for [izu:refuse:attr=value] and [izu:ip-deny:ip,ip]
+20041209 [1.F] Package: Working DEB package (tested on Sarge with Apache 2.0)
+20041205 [1.F] Source: Added support for optional link and alt label in [izu:image]
+20041204 [1.F] Package: Preparing some doc
+24041204 [1.F] Fix: [izu:image] align attribute made optional 
+20041204 [1.F] Cleanup: Remove admin/user lists, remove edit/login php sources
+20041204 [1.F] Package: Experimental DEB package
+20041204 [1.F] Version: Move to version 0.9.3
+
+[0.9.2]
+
+20041204 [1.F] Fix: Don't show options, credits nor stats for search agents
+20041203 [1.F] Fix: Quotes were displayed as \' in [s:...:title]
+20041128 [1.F] Source: Added crude support for [table], [row] and [col] tags.
+20041128 [1.F] Version: Move to version 0.9.2
+
+[0.9.1]
+
+20041128 [1.F] Source: Added primitive support for RSS 2.0 skipDays/skipHours and ttl.
+20041128 [1.F] Fix: Missing ETag/If-Modified support in RSS and .blog mode (wrong cache path)
+20041127 [1.F] Source: RSS feed support available for each blog page.
+20041126 [1.F] Fix: Cookies were using current path, not root path
+20041126 [1.F] Fix: Enscript was not working (missing file path after reorganization)
+20041123 [1.F] Source: Tentative of RSS support. Not finished yet.
+
+[0.9]
+
+20041121 [1.F] Version: Move to version 0.9
+20041121 [1.F] Source: Adding Google site search
+20041120 [1.F] Source: Added blog support, [izu:blog] tags, RBlog class, etc.
+
+[0.3.4]
+
+20041120 [1.F] Prefs: Set black theme to be the default
+200410xx [1.F] Themes: Added black theme.
+20040926 [1.F] Source: Don't display options when the user agent is a search bot (prevents link polution)
+20040926 [1.F] Fix: Quotes were displayed as \' in [named|IzumiLinks]
+20040925 [1.F] Source: Added support for [!-- ... --] block comments in Izu files
+20040509 [1.F] Source: Reply with HTTP 304 Not Modified when cache & ETag/Last-Modified match.
+
+
+[0.3.3]
+
+20040314 [1.F] Fix: Use dba_open("n") to create new db (not "c") and "wd" for read/write with wait lock
+20040314 [1.F] Source: Added izumi.icon and <link> favicon in commondisplay
+20040313 [1.F] Source: Added pref_title_name and pref_copyright_name, for owner's name in window title and copyright section
+20040301 [1.F] Fix: Changed web page title to start by Izumi (one of those minor yet so helpful usability improvments)
+20040229 [1.F] Fix: Ability to use [named|IzumiPageLink#reference]
+20040224 [1.F] Fix: Upgraded to PHP 4.3.3 and had to switch to DB4 for stats.
+20040220 [1.F] Fix: blockquote is tabs+ + (not tab nor *) + stuff, was missing the "not tab"
+20040217 [1.F] Pref: Added pref_html_meta_for_query_string
+
+[0.3.2]
+
+20040215 [1.F] Source: Added "site license" (html from prefs)
+20040212 [1.F] Test: logging http-language-accept (idea: use it to define initial UI language)
+
+[0.3.1]
+
+20040119 [2.F] Source: Added izu:image with possibility to add an align=right tag
+
+[0.3]
+
+20040108 [2.F] Source: Use internal Izumi url_rewrite to produce URLs that do not contain index.php
+20040108 [2.F] Source: Adapt location.php to work with an URL that does not contain index.php in the script name
+20040107 [2.F] Apache: Use url_rewrite to add index.php in not in URL
+20040106 [1.F] Idea: Do not format izumi keywords as HTML links for nonexisting pages! (as does Wiki btw)
+20040104 [1.F] Source: Added RPageLog to write page access into a combined format log (for webalizer)
+20040104 [1.F] Source: Support for PATH_INFO argument on the URL
+
+[0.0.2]
+
+200311xx [1.F] Source: Added RPageStat to store page access in DB2 files
+2003xxxx [1.F] Several fixes and enhancements, mostly to the izu tag patterns
+
+[0.0.1]
+
+20030810 [1.F] Source: Changing prefixes from tg_ to izu_
+20030810 [1.F] Idea: Project final name is Izumi (fountain) and prefix is izu_
+20030809 [1.F] Source: Implementing HTML cache mechanism
+20030809 [1.F] Source: Moving functionnality to classes RPagePath and RPage
+20030808 [1.F] Source: Implementing text-to-html rendering, using preg_replace() PHP function
+20030808 [1.F] Source: Implementing code for common_page.php, selects page and lists directories
+20030808 [1.F] Source: Transforming album.php into a page.php, introducing templates_dir and _page.php
+20030808 [1.F] Source: Simplifying common.php to keep only functions that seem necessary
+20030808 [1.F] Source: Renamed code and functions to Tanigo and tg_ prefix
+20030808 [1.F] Source: Extracted RIG's source code, simplifying to keep only common functions and main album page
+20030808 [1.F] Doc: Starting a project description file
+20030807 [1.F] Idea: Got the main idea of managing a web site using text files with a Wiki-text format
+
+
+*********************************************************************
+*********************************************************************
+
+Format:
+-------
+
+Each line is in the form "Date [P.S] Feature [T]" where:
+- P is a priority index (1:urgent, 9:later, 0:prototype)
+- S is a status letter
+- P is the optional target tag, as follows:
+
+[N] "Not available yet", i.e. not started
+[W] "Work", Work in progress, i.e. non testable feature
+[T] "Test", feature can be tested but is not finished
+[F] "Finished", feature is supposedly finished, thus has to be tested
+
+[M] MacOS
+[W] Windows (default)
+
+Most recent actions go first.
+Dates are in YYYYMMDD. Dates for N actions are when action is created.
+Dates for W/F actions are date when action is actually started.
+No tabs, use spaces for alignment (for viewcvs)
+
+*********************************************************************
+
+
+--- end ---
+
+
+
+
+//-------------------------------------------------------------
+//	$Log$
+//	Revision 1.1  2005-02-16 02:04:49  ralfoide
+//	Stable version 0.9.4 updated to SourceForge
+//
+//	Revision 1.13  2004/12/20 07:01:37  ralf
+//	New minor features. Version 0.9.4
+//	
+//	Revision 1.12  2004/12/09 19:57:18  ralf
+//	Fixes
+//	
+//	Revision 1.11  2004/12/06 07:54:04  ralf
+//	Using GPL headers
+//	
+//	Revision 1.10  2004/12/05 07:01:13  ralf
+//	Updates
+//	
+//	Revision 1.9  2004/12/04 22:22:39  ralf
+//	Cleaned some obsolete RIG code.
+//	Removed login and admin/users management.
+//	Moved to version 0.9.3.
+//	
+//	Revision 1.8  2004/12/04 10:08:15  ralf
+//	Table support. Fixes
+//	
+//	Revision 1.7  2004/11/28 22:38:00  ralf
+//	Version 0.9.1: RSS support with ETag/If-Modified.
+//	
+//	Revision 1.6  2004/11/27 23:23:35  ralf
+//	RSS support.
+//	
+//	Revision 1.5  2004/11/22 04:01:38  ralf
+//	Added blog archives.
+//	Added Google site search.
+//	Moved to version 0.9 (testing before going 1.0)
+//	
+//	Revision 1.4  2004/09/26 19:33:25  ralf
+//	Updates
+//	
+//	Revision 1.3  2004/05/09 19:06:10  ralf
+//	Use url rewrite. Allow for not having index.php in the URL.
+//	Added izu:image, #links, fixed some regexps. Log http-language-accept.
+//	Added site license generated on every page.
+//	Added izumi favicon. Fixed dba_open n vs c, using wait lock.
+//	Support HTTP 304 Not Modified, ETag, Last-Modified headers and If-counterparts.
+//	
+//	Revision 1.2  2004/01/06 09:09:05  ralf
+//	Don't create izu links on page that do not exists
+//	
+//	Revision 1.1.1.1  2004/01/05 06:11:58  ralf
+//	Version 0.3, stable/testing
+//	
+//-------------------------------------------------------------

@@ -1,0 +1,108 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# RM 20041204 -- part of this inspired from gallery/debian/rules
+
+PACKAGE=izumi
+DESTDIR=$(CURDIR)/debian/$(PACKAGE)
+ETCDIR=$(DESTDIR)/etc/$(PACKAGE)
+USRDIR=$(DESTDIR)/usr/share/$(PACKAGE)
+DOCDIR=$(DESTDIR)/usr/share/doc/$(PACKAGE)
+WWWDIR=$(DESTDIR)/var/www/$(PACKAGE)
+LOGDIR=$(DESTDIR)/var/log/$(PACKAGE)
+CACHED=$(DESTDIR)/var/cache/$(PACKAGE)
+
+
+#---------------------------------------------------------
+
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean 
+
+#---------------------------------------------------------
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	# RM 20041204: create dirs specified in debian/package.dirs
+	dh_installdirs
+
+	# Add here commands to install the package into debian/izumi.
+	# $(MAKE) install DESTDIR=$(CURDIR)/debian/izumi
+	# Install conf files
+	@install -m 644 debian/apache.conf			$(ETCDIR)
+	@install -m 644 settings/*.php				$(USRDIR)/settings
+	# install source files
+	@install -m 644 src/*.php  					$(USRDIR)/site
+	# install htdocs and override the location specific for debian
+	@install -m 644 htdocs/*.*					$(WWWDIR)
+	@install -m 644 debian/location.php			$(WWWDIR)
+	# install default content
+	@install -m 644 htdocs/my-content/[A-Z]*.izu $(WWWDIR)/my-content
+	@install -m 644 htdocs/my-images/*.jpg		$(WWWDIR)/my-images
+	# install debian help files
+	@install -m 644 debian/*.html				$(DOCDIR)
+	@install -m 644 debian/*.txt				$(DOCDIR)
+	# fix directories permissions (useless here? done again in postinst)
+	@install -m 755 -o www-data -d				$(LOGDIR)
+	@install -m 755 -o www-data -d				$(CACHED)/cache
+	@install -m 755 -o www-data -d				$(CACHED)/options
+		
+
+
+#---------------------------------------------------------
+
+# Build architecture-independent files here.
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs 
+	dh_installdocs
+#-	dh_installexamples
+#	dh_install
+#	dh_installmenu
+	dh_installdebconf	
+#?	dh_installlogrotate
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_installinit
+#	dh_installcron
+#	dh_installinfo
+#-	dh_installman
+	dh_link
+#-	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_perl
+#	dh_python
+#	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+
+build:
+# Build architecture-dependent files here.
+
+binary-arch: build install
+# We have nothing to do by default.
+
+binary: binary-indep binary-arch
+
+#---------------------------------------------------------
+
+.PHONY: build clean binary-indep binary-arch binary install configure
+

@@ -1,0 +1,55 @@
+[izu:html-charset:UTF-8] [izu:html-lang:en-US]
+ Content: [Home|Index] | IzumiTextSyntax
+----
+
+[!--
+	$Id$
+
+	Copyright 2004, Raphael MOLL.
+
+	This file is part of Izumi.
+
+	Izumi is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
+
+	Izumi is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with Izumi; if not, write to the Free Software
+	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+--]
+
+[c][izu:image:my-images/izumi.jpg] /
+[c][h2]Welcome to 泉 Izumi!
+
+If you can view this page on a web browser, your 泉 Izumi installation
+is working! Congratulations!
+
+Below you will find a short summary of what 泉 Izumi is (and what it is not).
+In another page you can find the IzumiTextSyntax used to write pages and blogs.
+
+
+----
+[s:What is 泉 Izumi?]
+
+泉 Izumi is a simple web site content management system with blogging
+capabilities. The content is described using text files with a wiki-like
+syntax and is ideally suited to be modified directly on the server using
+a text editor. The content is rendered as full-formatted web pages
+and it the case of blogs can also be rendered as an RSS stream.
+Access logs (Combined Log Format) and in-page online stats are provided.
+An HTML and RSS caching mechanism is present to reduce the server load as
+well as full support of HTTP ETags and 304 Not Modified.
+
+----
+[s:What is it not?]
+
+
+----
+[s:How do I use it?]
+
