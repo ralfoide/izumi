@@ -24,15 +24,18 @@
 */
 //************************************************************************
 
-$izu_version = "0.9.4";
+$izu_version = "1.0";
 
 // end
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.1  2005-02-16 02:04:51  ralfoide
-//	Stable version 0.9.4 updated to SourceForge
+//	Revision 1.2  2005-02-16 02:33:02  ralfoide
+//	Version 1.0 on SourceForge with DEB package
 //
+//	Revision 1.1  2005/02/16 02:04:51  ralfoide
+//	Stable version 0.9.4 updated to SourceForge
+//	
 //	Revision 1.9  2004/12/20 07:01:37  ralf
 //	New minor features. Version 0.9.4
 //	

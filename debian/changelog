@@ -1,3 +1,11 @@
+izumi (1.0-0) stable; urgency=low
+
+  * Version 0.9.4 deemded stable.
+  * Upgraded to 1.0 (no changed).
+  * Uploaded to SourceForge.
+
+ -- Raphael Moll <webralf@alfray.com>  Tue, 15 Feb 2005 18:24:31 -0800
+
 izumi (0.9.4-0) unstable; urgency=low
 
   * New minor features: blog previous links, izu:ip-deny.
