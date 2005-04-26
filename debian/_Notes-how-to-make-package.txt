@@ -34,3 +34,20 @@ cd izumi/debian
 ./_mk_signed.sh (or ./_mk_deb.sh if for temp testing)
 ./_lint.sh      (if bored... j/k)
 
+7- Make tag on CVS:
+
+(from ./izumi)
+
+./_mk_tag.sh  => follow example for date and revision
+
+
+8- Save package in distribs:
+
+(from ./izumi)
+cd ../distribs
+mv ../izumi_X.Y* .
+=> use _upload2sf.net next and upload in incoming, then create
+=> packages using the sf.net web interface. Get the changelog
+=> from izumi/debian/changelog.
+
+
