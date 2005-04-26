@@ -1237,7 +1237,7 @@ class RPage
 				// -- html references --
 				
 				// reference hlink: [a:name] without [[
-				$p[] = '/(^|[^\[])\[a:([a-zA-Z][a-zA-Z0-9_]+)\]/';
+				$p[] = '/(^|[^\[])\[a:([a-zA-Z][a-zA-Z0-9_-]+)\]/';
 				$r[] = '\1<a name="\2" /a>';
 	
 				// -- remove exception formaters --
@@ -1747,11 +1747,14 @@ function izu_blog_section($date, $title)
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.2  2005-04-05 18:54:01  ralfoide
+//	Revision 1.3  2005-04-26 00:45:28  ralfoide
+//	Updating DEB to 1.1
+//
+//	Revision 1.2  2005/04/05 18:54:01  ralfoide
 //	Started work on version 1.1
 //	Changed blog entries keys from MD5 to encoded date/title clear text.
 //	Added internal anchor references to blog entries.
-//
+//	
 //	Revision 1.1  2005/02/16 02:04:51  ralfoide
 //	Stable version 0.9.4 updated to SourceForge
 //	

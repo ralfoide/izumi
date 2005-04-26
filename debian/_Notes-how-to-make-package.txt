@@ -1,0 +1,35 @@
+RM 20050425
+
+1- Edit "debian/dirs" for directory list to be created automatically
+
+2- Edit "debian/rules" to add new files (with @install ...)
+
+3- If IzumiTextSyntax has been changed, the one from Izumi is also used:
+	a- in htdocs/my-content/IzumiTextSyntax.izu (vimdiff)
+	b- cd debian ; links http://ralf.alfray.com/.izumi/IzumiTextSyntax
+		b.1- F10 save as index.html
+		b.2- F10 Save formatted document as izumi.txt
+
+4- From http://ralf.alfray.com/.izumi/LinuxTips.blog?s=20041204_debian_packages
+
+	cd izumi (<== not debian!)
+	view debian/changelog (to check current version number)
+	dch -i (increment subversion i.e. 1.2-0 to 1.2-1)
+or	dch -v 1.1-0 (full new version with major.minor-subversion)
+=> Note that I only use X.Y-SV now, not X.Y.Z-V
+then:
+- edit email to be webralf@...
+- insert changelog
+- ZZ
+
+5- Commit in CVS:
+
+cd izumi
+cvs -z3 -q update
+cvs -z3 -q commit 
+
+6- Make package:
+
+cd izumi/debian
+
+
