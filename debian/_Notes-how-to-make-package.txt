@@ -32,5 +32,5 @@ cvs -z3 -q commit -m "message"
 
 cd izumi/debian
 ./_mk_signed.sh (or ./_mk_deb.sh if for temp testing)
-
+./_lint.sh      (if bored... j/k)
 

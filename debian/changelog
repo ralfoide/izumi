@@ -4,7 +4,7 @@ izumi (1.1-0) stable; urgency=low
   * Changed way permalinks are generated (now actually working)
   * Intra/inter blog references now possible
 
- -- Raphael Moll <ralf@alfray.com>  Mon, 25 Apr 2005 17:40:32 -0700
+ -- Raphael Moll <webralf@alfray.com>  Mon, 25 Apr 2005 17:40:32 -0700
 
 izumi (1.0-0) stable; urgency=low
 
