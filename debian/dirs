@@ -2,7 +2,8 @@
 /usr/share/doc/izumi
 /usr/share/izumi/site
 /usr/share/izumi/settings
-/usr/share/izumi/highlighting
+/usr/share/izumi/highlighting/vim/ftdetect
+/usr/share/izumi/highlighting/vim/syntax
 /var/www/izumi/my-content
 /var/www/izumi/my-images
 /var/log/izumi

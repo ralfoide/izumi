@@ -697,7 +697,7 @@ This will <i>force</i> creation of links to the corresponding page name,
 <i>even</i> if they do not exist. The link will be displayed with the
 corresponding link title.<br>
 <p>
-In this format, you can also append an HTML anchor to the page name,
+In this format, you can also append an <a href="#html-ref">HTML anchor</a> to the page name,
 that is an expression in the form "#anchor_name". The anchor name
 accept alphabetic and numeric characters as well as underscores.
 <p>
@@ -766,8 +766,9 @@ Example:
 </td></tr></table>
 <p>
 <p>
-5.3. HTML Anchors
+<h3>5.3. <a name="html-ref" /a>HTML Anchors</h3>
 <p>
+To define an HTML anchor:
 <p>
 <pre>
 <b>[</b>a:<i>name</i><b>]</b>
@@ -775,9 +776,11 @@ Example:
 <blockquote>
 Declares an HTML anchor.
 The anchor name can be composed of lower-case or upper-case letters (<i>a</i>..<i>z</i>),
-digits (<i>0</i>..<i>9</i>) and underscore.
+digits (<i>0</i>..<i>9</i>), underscore, and dash.
 <p>
 </blockquote>
+To reference that anchor:
+<p>
 <pre>
 <b>[#</b><i>name</i><b>]</b>
 </pre>
@@ -787,10 +790,14 @@ The anchor name can be composed of lower-case or upper-case letters (<i>a</i>..<
 digits (<i>0</i>..<i>9</i>) and underscore.
 <p>
 </blockquote>
-Note that internal and external links, as described in the previous section, can
-also specify an HTML anchor name.
+Notes:
+<ul>
+<li>Internal and external links, as described in the previous section, 	can also specify an HTML anchor name.</li>
+<li><i>name</i> can be the <i>exact</i> content of a blog section tag in order to 	create a reference to a blog permalink. 	See <a href="#blog-ref">blog references</a> below for details.</li>
 <p>
 <p>
+<p>
+</ul>
 <h3>5.4. Table Management</h3>
 <p>
 Izumi has a simplified syntax to create <i>simple</i> HTML tables.
@@ -971,19 +978,19 @@ You do not need the colon character if the argument is omitted.
 Examples
 <p>
 <pre>
-[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>]  <img src="http://izumi.alfray.com/img/izu_small.jpg" align="abscenter"/>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>]  <img src="http://ralf.alfray.com/.izumi/my-content/http%3a/izumi.alfray.com/img/izu_small.jpg" align="abscenter"/>
 <p>
-[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>,align=right]  <img src="http://izumi.alfray.com/img/izu_small.jpg" align="right"/>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>,align=right]  <img src="http://ralf.alfray.com/.izumi/my-content/http%3a/izumi.alfray.com/img/izu_small.jpg" align="right"/>
 <p>
-[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>,align=right|<i>http://izumi.alfray.com</i>]  <a href="http://izumi.alfray.com"><img src="http://izumi.alfray.com/img/izu_small.jpg" align="right" border="0"/></a>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>,align=right|<i>http://izumi.alfray.com</i>]  <a href="http://izumi.alfray.com"><img src="http://ralf.alfray.com/.izumi/my-content/http%3a/izumi.alfray.com/img/izu_small.jpg" align="right" border="0"/></a>
 <p>
-[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>,align=right|<i>http://izumi.alfray.com</i>:Welcome to Izumi!]  <a href="http://izumi.alfray.com"><img src="http://izumi.alfray.com/img/izu_small.jpg" align="right" alt="Welcome to Izumi!" title="Welcome to Izumi!" border="0"/></a>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>,align=right|<i>http://izumi.alfray.com</i>:Welcome to Izumi!]  <a href="http://izumi.alfray.com"><img src="http://ralf.alfray.com/.izumi/my-content/http%3a/izumi.alfray.com/img/izu_small.jpg" align="right" alt="Welcome to Izumi!" title="Welcome to Izumi!" border="0"/></a>
 <p>
-[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>|<i>http://izumi.alfray.com</i>]  <a href="http://izumi.alfray.com"><img src="http://izumi.alfray.com/img/izu_small.jpg" align="abscenter" border="0"/></a>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>|<i>http://izumi.alfray.com</i>]  <a href="http://izumi.alfray.com"><img src="http://ralf.alfray.com/.izumi/my-content/http%3a/izumi.alfray.com/img/izu_small.jpg" align="abscenter" border="0"/></a>
 <p>
-[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>|<i>http://izumi.alfray.com</i>:Welcome to Izumi!]  <a href="http://izumi.alfray.com"><img src="http://izumi.alfray.com/img/izu_small.jpg" align="abscenter" alt="Welcome to Izumi!" title="Welcome to Izumi!" border="0"/></a>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>|<i>http://izumi.alfray.com</i>:Welcome to Izumi!]  <a href="http://izumi.alfray.com"><img src="http://ralf.alfray.com/.izumi/my-content/http%3a/izumi.alfray.com/img/izu_small.jpg" align="abscenter" alt="Welcome to Izumi!" title="Welcome to Izumi!" border="0"/></a>
 <p>
-[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>:Welcome to Izumi!]  <img src="http://izumi.alfray.com/img/izu_small.jpg" align="abscenter" alt="Welcome to Izumi!" title="Welcome to Izumi!"/>
+[izu:image:<i>http://izumi.alfray.com/img/izu_small.jpg</i>:Welcome to Izumi!]  <img src="http://ralf.alfray.com/.izumi/my-content/http%3a/izumi.alfray.com/img/izu_small.jpg" align="abscenter" alt="Welcome to Izumi!" title="Welcome to Izumi!"/>
 <p>
 <p>
 </pre>
@@ -1078,7 +1085,10 @@ rendered file.
 <p>
 <h3>6.3. Blog Tags</h3>
 <p>
-To create a blog master file, you need these two tags:
+<h4>6.3.1. Blog Header</h4>
+<p>
+To create a blog master file, you need to insert this tag in the first line
+of your page:
 <p>
 <pre>
 <b>[izu:blog]</b>
@@ -1088,21 +1098,96 @@ This tag tells Izumi this file represents a blog master file
 and as such as a special handling.
 <p>
 </blockquote>
-<pre>
-<b>[s:</b><i>date</i><b>:</b><i>title</i><b>]</b>
-</pre>
-<blockquote>
-This create a new entry (a.k.a. "section") in a blog master file.
+If you want a header (i.e. a bunch of text) repeated at the top of every
+blog page (including individual section pages) you can use this tag:
 <p>
-</blockquote>
 <pre>
 <b>[izu:header:--</b>   ...(lines of text)...   <b>--]</b>
 </pre>
 <blockquote>
 This pair of tags delimits text that will be automatically
 inserted in every blog entry.
+This text can be as long as you want. <br>
+Typically you would insert a blog header at the top of the master
+file after the first line.
 <p>
 </blockquote>
+<h4>6.3.2. Blog Section</h4>
+<p>
+Once the blog master tag and the optional blog header tag have been defined,
+each "blog post" is defined by inserting a "blog section" tag:
+<p>
+<pre>
+<b>[s:</b><i>date</i><b>]</b>
+</pre>
+or
+<pre>
+<b>[s:</b><i>date</i><b>:</b><i>title</i><b>]</b>
+</pre>
+<blockquote>
+This creates a new section in a blog master file. <br>
+A section lasts till the next section or the end of the file, whichever comes first.
+<p>
+</blockquote>
+There are two main rules to create a good section tag:
+<ul>
+<li>The <i>title</i> is optional. The <i>date</i> is not.</li>
+<li>The colon (:) character as well as the closing bracket (]) character are 	reserved and cannot appear in the <i>date</i> or the <i>title</i>.</li>
+<li>The <i>date</i> argument is to be interpreted in a very large sense:</li>
+<ul>
+<li>If the <i>date</i> matches one of the following formats, it will be automatically 		rendered correctly according to the current locate:</li>
+<ul>
+<li>YYYY-MM-DD:HH:MM:SS or YYYY/MM/DD:HH:MM:SS or YYYMMDDHHMMSS</li>
+<li>YYYY-MM-DD:HH:MM or YYYY/MM/DD:HH:MM or YYYMMDDHHMM</li>
+<li>YYYY-MM-DD or YYYY/MM/DD or YYYMMDD</li>
+</ul>
+<li>Otherwise it will be used as-is, in which case it can really be anything 		i.e. it doesn't even need to be only digits.</li>
+</ul>
+<li>Sections are uniquely identified by the <i>date</i> + <i>title</i>. 	It is up to you to make sure these entries are unique for each post 	(which happens most naturally if you specify a different date and/or title 	for each post.)</li>
+</ul>
+When Izumi creates the HTML for a section, it automatically places a "permalink"
+(i.e. a permanent link) at the bottom of the section. If a user follows that link
+s/he will be presented with a page that contain solely that individual section.
+<p>
+Izumi automatically generates a "key" that uniquely identifies this section within
+a given blog. The key is composed of the date and the title, simplified to 
+keep only generic characters (alphabet, digits and underscores). A key is at most
+32 characters long, if a key is longer it will be shortened and a CRC is appended.
+As explained above, it is up to you to make sure the key is unique.
+If it is not, individual section pages referenced by a permalink will display all
+the sections with the same key. This may or may not be the desired effect.
+<p>
+<p>
+<h4>6.3.3. <a name="blog-ref" /a>Blog References</h4>
+<p>
+The permalink can also be used as an anchor to create intra or inter-blog
+references. 
+<p>
+The idea is that, when writing a reference, after the # you can have <i>exactly</i> 
+what appears in a section tag 
+(i.e. <i>[s:date:title]</i> or <i>[s:date]</i> without the brackets).
+So creating an anchor is natural (i.e. using #) and easy (i.e. just copy paste
+the tag's content.)
+Note that the link title can be optional. The page name can be optional
+too, in which case it refers to the current page.
+There are a couple of limitations:
+<ul>
+<li>The link must point to a blog page since this will generate a permalink 	reference and only blog pages have permalinks.</li>
+<li>If a link title is not specified, the blog entry must have a title 	(otherwise there's nothing to display so it's not allowed!)</li>
+</ul>
+For pages which are not blogs, just use a normal <a href="#html-ref">HTML anchor references</a> (i.e.
+tag [a:name] to create the anchor and [title|dir/page#name] to reference it.)
+<p>
+The exact syntax and available variants are:
+<pre>
+[title|dir/page#s:date:optional-blog-title]
+[title|#s:date:optional-blog-title]
+[|dir/page#s:date:optional-blog-title]
+[#s:date:blog-title-not-optional-here]
+<p>
+</pre>
+<h4>6.3.4. Other Blog Tags</h4>
+<p>
 The following optional tags are generally of little use except
 in very peculiar cases which won't be described in detail here:
 <p>
@@ -1110,7 +1195,7 @@ in very peculiar cases which won't be described in detail here:
 <b>[izu:blog-refs:</b><i>References, comma separated</i><b>]</b>
 </pre>
 <blockquote>
-This special tag insert references to other blogs in the header
+This special tag inserts references to other blogs in the header
 of blog entries. The <i>references</i> must a comma separated list
 of blog names, in the form "BlogPageName" or "Title|BlogPageName".
 <p>
@@ -1119,14 +1204,21 @@ of blog names, in the form "BlogPageName" or "Title|BlogPageName".
 <b>[izu:permalink:</b><i>mode</i><b>:</b><i>title</i><b>:</b><i>key</i><b>]</b>
 </pre>
 <blockquote>
-This special tag insert a "permanent link" (a.k.a. permalink) to
+This special tag inserts a "permanent link" (a.k.a. permalink) to
 a given entry of the current blog. <br>
 <i>mode</i> must be one of <i>br</i> or <i>hr</i> or nothing and indicates
 how the HTML is to be closed. <br>
 <i>title</i> is the linked text which will appear in the rendered page.
-<i>key</i> is the permalink MD5 key or the <i>rss</i> special name.
+<i>key</i> is the permalink key or the <i>rss</i> special name.
 <p>
 </blockquote>
+Note: The permalink tag is automatically inserted by Izumi when rendering
+a blog master file to HTML. Inserting your own will not have the side
+effect of creating new section tags! Since it is mostly used internally
+its format may change in future revisions.
+<p>
+<hr>
+[ end - $Id$ ]
 <hr>
 <p>
 <center><br>
@@ -1210,14 +1302,15 @@ This work is licensed by Rapha&euml;l Moll under a <a href="http://creativecommo
 			<font color="#FFFF77"><center>
 				<b>Stats</b>			</center></font>
 		</td></tr></table>
-	572 accesses, 6 accesses from 198.144.201.20
-<br>Visited 72 times by <a href="http://www.google.com">Google</a>, last 2004/11/30 22:55
-<br>Visited 11 times by <a href="http://www.yahoo.com/">Yahoo!</a>, last 2004/12/05 09:21
-<br>Visited 3 times by <a href="http://www.alexa.com/">Alexa</a>, last 2004/12/06 14:02
-<br>Visited 212 times by <a href="http://search.msn.com/">MSN</a>, last 2004/11/28 06:35<p>		<table width="100%" bgcolor="#77AA77"><tr><td>
+	765 accesses, 8 accesses from 198.144.201.20
+<br>Visited 120 times by <a href="http://www.google.com">Google</a>, last 2005/04/22 11:46
+<br>Visited 34 times by <a href="http://www.yahoo.com/">Yahoo!</a>, last 2005/04/23 23:47
+<br>Visited 4 times by <a href="http://www.alexa.com/">Alexa</a>, last 2005/02/11 07:28
+<br>Visited 5 times by <a href="http://www.teoma.com/">Teoma</a>, last 2005/03/18 10:31
+<br>Visited 237 times by <a href="http://search.msn.com/">MSN</a>, last 2005/04/23 16:10<p>		<table width="100%" bgcolor="#77AA77"><tr><td>
 			<center><font size="-1" color="#FFFF77">
 				&lt;
-				Generated in 1.42 seconds the <i>12/08/2004, 11:56 PM</i> by <i>Izumi 0.9.3</i>				&gt;
+				Generated in 0.12 seconds the <i>04/25/2005, 05:30 PM</i> by <i>Izumi 1.1</i>				&gt;
 			</font></center>
 		</td></tr></table>
 	</center>

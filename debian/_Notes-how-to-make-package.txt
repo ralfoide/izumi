@@ -26,10 +26,11 @@ then:
 
 cd izumi
 cvs -z3 -q update
-cvs -z3 -q commit 
+cvs -z3 -q commit -m "message"
 
 6- Make package:
 
 cd izumi/debian
+./_mk_signed.sh (or ./_mk_deb.sh if for temp testing)
 
 

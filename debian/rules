@@ -38,12 +38,17 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/izumi.
+
 	# $(MAKE) install DESTDIR=$(CURDIR)/debian/izumi
 	# Install conf files
 	@install -m 644 debian/apache.conf			$(ETCDIR)
 	@install -m 644 settings/*.php				$(USRDIR)/settings
 	# install source files
 	@install -m 644 src/*.php  					$(USRDIR)/site
+	# install highlighting files
+	@install -m 644 highlighting/vim/README.txt		$(USRDIR)/highlighting/vim
+	@install -m 644 highlighting/vim/ftdetect/*.vim	$(USRDIR)/highlighting/vim/ftdetect
+	@install -m 644 highlighting/vim/syntax/*.vim	$(USRDIR)/highlighting/vim/syntax
 	# install htdocs and override the location specific for debian
 	@install -m 644 htdocs/*.*					$(WWWDIR)
 	@install -m 644 debian/location.php			$(WWWDIR)
@@ -57,7 +62,7 @@ install: build
 	@install -m 755 -o www-data -d				$(LOGDIR)
 	@install -m 755 -o www-data -d				$(CACHED)/cache
 	@install -m 755 -o www-data -d				$(CACHED)/options
-		
+
 
 
 #---------------------------------------------------------

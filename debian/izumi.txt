@@ -439,19 +439,26 @@
                                                                                                                            
                                                                          3.1.1. Title Level 3                              
 
-   5.3. HTML Anchors
+  5.3. HTML Anchors
+
+   To define an HTML anchor:
 
  [a:name]
 
-     Declares an HTML anchor. The anchor name can be composed of lower-case or upper-case letters (a..z), digits (0..9)
-     and underscore.
+     Declares an HTML anchor. The anchor name can be composed of lower-case or upper-case letters (a..z), digits (0..9),
+     underscore, and dash.
+
+   To reference that anchor:
 
  [#name]
 
      Creates a link to an HTML anchor. The anchor name can be composed of lower-case or upper-case letters (a..z), digits
      (0..9) and underscore.
 
-   Note that internal and external links, as described in the previous section, can also specify an HTML anchor name.
+   Notes:
+     * Internal and external links, as described in the previous section, can also specify an HTML anchor name.
+     * name can be the exact content of a blog section tag in order to create a reference to a blog permalink. See blog
+       references below for details.
 
   5.4. Table Management
 
@@ -623,34 +630,106 @@
 
   6.3. Blog Tags
 
-   To create a blog master file, you need these two tags:
+    6.3.1. Blog Header
+
+   To create a blog master file, you need to insert this tag in the first line of your page:
 
  [izu:blog]
 
      This tag tells Izumi this file represents a blog master file and as such as a special handling.
 
- [s:date:title]
-
-     This create a new entry (a.k.a. "section") in a blog master file.
+   If you want a header (i.e. a bunch of text) repeated at the top of every blog page (including individual section pages)
+   you can use this tag:
 
  [izu:header:--   ...(lines of text)...   --]
 
-     This pair of tags delimits text that will be automatically inserted in every blog entry.
+     This pair of tags delimits text that will be automatically inserted in every blog entry. This text can be as long as
+     you want.
+     Typically you would insert a blog header at the top of the master file after the first line.
+
+    6.3.2. Blog Section
+
+   Once the blog master tag and the optional blog header tag have been defined, each "blog post" is defined by inserting a
+   "blog section" tag:
+
+ [s:date]
+
+   or
+
+ [s:date:title]
+
+     This creates a new section in a blog master file.
+     A section lasts till the next section or the end of the file, whichever comes first.
+
+   There are two main rules to create a good section tag:
+     * The title is optional. The date is not.
+     * The colon (:) character as well as the closing bracket (]) character are reserved and cannot appear in the date or
+       the title.
+     * The date argument is to be interpreted in a very large sense:
+          * If the date matches one of the following formats, it will be automatically rendered correctly according to the
+            current locate:
+               * YYYY-MM-DD:HH:MM:SS or YYYY/MM/DD:HH:MM:SS or YYYMMDDHHMMSS
+               * YYYY-MM-DD:HH:MM or YYYY/MM/DD:HH:MM or YYYMMDDHHMM
+               * YYYY-MM-DD or YYYY/MM/DD or YYYMMDD
+          * Otherwise it will be used as-is, in which case it can really be anything i.e. it doesn't even need to be only
+            digits.
+     * Sections are uniquely identified by the date + title. It is up to you to make sure these entries are unique for
+       each post (which happens most naturally if you specify a different date and/or title for each post.)
+   When Izumi creates the HTML for a section, it automatically places a "permalink" (i.e. a permanent link) at the bottom
+   of the section. If a user follows that link s/he will be presented with a page that contain solely that individual
+   section.
+
+   Izumi automatically generates a "key" that uniquely identifies this section within a given blog. The key is composed of
+   the date and the title, simplified to keep only generic characters (alphabet, digits and underscores). A key is at most
+   32 characters long, if a key is longer it will be shortened and a CRC is appended. As explained above, it is up to you
+   to make sure the key is unique. If it is not, individual section pages referenced by a permalink will display all the
+   sections with the same key. This may or may not be the desired effect.
+
+    6.3.3. Blog References
+
+   The permalink can also be used as an anchor to create intra or inter-blog references.
+
+   The idea is that, when writing a reference, after the # you can have exactly what appears in a section tag (i.e.
+   [s:date:title] or [s:date] without the brackets). So creating an anchor is natural (i.e. using #) and easy (i.e. just
+   copy paste the tag's content.) Note that the link title can be optional. The page name can be optional too, in which
+   case it refers to the current page. There are a couple of limitations:
+     * The link must point to a blog page since this will generate a permalink reference and only blog pages have
+       permalinks.
+     * If a link title is not specified, the blog entry must have a title (otherwise there's nothing to display so it's
+       not allowed!)
+   For pages which are not blogs, just use a normal HTML anchor references (i.e. tag [a:name] to create the anchor and
+   [title|dir/page#name] to reference it.)
+
+   The exact syntax and available variants are:
+
+ [title|dir/page#s:date:optional-blog-title]
+ [title|#s:date:optional-blog-title]
+ [|dir/page#s:date:optional-blog-title]
+ [#s:date:blog-title-not-optional-here]
+
+    6.3.4. Other Blog Tags
 
    The following optional tags are generally of little use except in very peculiar cases which won't be described in
    detail here:
 
  [izu:blog-refs:References, comma separated]
 
-     This special tag insert references to other blogs in the header of blog entries. The references must a comma
+     This special tag inserts references to other blogs in the header of blog entries. The references must a comma
      separated list of blog names, in the form "BlogPageName" or "Title|BlogPageName".
 
  [izu:permalink:mode:title:key]
 
-     This special tag insert a "permanent link" (a.k.a. permalink) to a given entry of the current blog.
+     This special tag inserts a "permanent link" (a.k.a. permalink) to a given entry of the current blog.
      mode must be one of br or hr or nothing and indicates how the HTML is to be closed.
-     title is the linked text which will appear in the rendered page. key is the permalink MD5 key or the rss special
-     name.
+     title is the linked text which will appear in the rendered page. key is the permalink key or the rss special name.
+
+   Note: The permalink tag is automatically inserted by Izumi when rendering a blog master file to HTML. Inserting your
+   own will not have the side effect of creating new section tags! Since it is mostly used internally its format may
+   change in future revisions.
+
+     -------------------------------------------------------------------------------------------------------------------
+
+   [ end - $Id$ ]
 
      -------------------------------------------------------------------------------------------------------------------
 
@@ -670,10 +749,11 @@
 
                                                             Stats                                                          
 
-                                        572 accesses, 6 accesses from 198.144.201.20
-                                      Visited 72 times by Google, last 2004/11/30 22:55
-                                      Visited 11 times by Yahoo!, last 2004/12/05 09:21
-                                       Visited 3 times by Alexa, last 2004/12/06 14:02
-                                       Visited 212 times by MSN, last 2004/11/28 06:35
+                                        765 accesses, 8 accesses from 198.144.201.20
+                                     Visited 120 times by Google, last 2005/04/22 11:46
+                                      Visited 34 times by Yahoo!, last 2005/04/23 23:47
+                                       Visited 4 times by Alexa, last 2005/02/11 07:28
+                                       Visited 5 times by Teoma, last 2005/03/18 10:31
+                                       Visited 237 times by MSN, last 2005/04/23 16:10
 
-                            < Generated in 1.42 seconds the 12/08/2004, 11:56 PM by Izumi 0.9.3 >                          
+                             < Generated in 0.12 seconds the 04/25/2005, 05:30 PM by Izumi 1.1 >                           
