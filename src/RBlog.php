@@ -845,7 +845,16 @@ class RBlog extends RPage
 			// Add content to the current RSS entry if needed
 
 			if ($rss_file != NULL && !$is_izu_tag)
+			{
+				// RM 20050510 need to perform proper XML encoding of HTML entities
+				// A quick hack is to use htmlspecialchars which will convert & < > " and '
+				// into they HTML equivalent. This works as these are encoded the same
+				// way in HTML and XML.
+				//$s = htmlspecialchars($line);
+				//if ($s != $line)
+				//	echo "<b>'$line'</b> => '$s'<p>";
 				$rss_content .= $line;
+			}
 		
 		} // while !feof file
 
@@ -1134,12 +1143,17 @@ class RBlog extends RPage
 		// echo "writeRssItemFooter $file<p>";
 
 		if ($file != NULL)
-		{
-			// Render izu conten as HTML
+		{	
+			// Render izu content as HTML
 			$content = $this->renderString($content);
 			
 			// Transform HTML entities as appropriate for XML content
-			$content = htmlentities($content);
+			// RM 20050510 htmlentities => htmlspecialchars
+			// This works as htmlspecialchars only transforms & < > " and '
+			// which have the same encoding in XML and HTML.
+			// Using htmlentities was wrong as it also encode other HTML
+			// entities in entities which are NOT part of XML (such as accents)
+			$content = htmlspecialchars($content);
 			fwrite($file, $content);
 
 			$s = "</description>\n</item>\n";
@@ -1161,11 +1175,14 @@ class RBlog extends RPage
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.2  2005-04-05 18:53:44  ralfoide
+//	Revision 1.3  2005-05-10 18:06:26  ralfoide
+//	Fixed a minor bug in the RSS export: accents where improperly encoded as HTML entities.
+//
+//	Revision 1.2  2005/04/05 18:53:44  ralfoide
 //	Started work on version 1.1
 //	Changed blog entries keys from MD5 to encoded date/title clear text.
 //	Added internal anchor references to blog entries.
-//
+//	
 //	Revision 1.1  2005/02/16 02:04:51  ralfoide
 //	Stable version 0.9.4 updated to SourceForge
 //	
