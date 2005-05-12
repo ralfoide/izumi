@@ -51,6 +51,15 @@ TBDL
 
 -- done --
 
+[1.1.2] (unstable)
+
+20050512 [1.F] Fix:     Empty lines that consist of solely white-space characters in RPage
+20050512 [1.F] Fix:     Remove unnecessary <p> at beginning of RSS post content
+
+[1.1.1] (unstable)
+
+20050510 [1.F] Fix:     RSS export: accents were improperly encoded as HTML entities.
+
 [1.1] (unstable)
 
 20050404 [1.F] Source:  Added syntax highlight file for Vim
@@ -195,9 +204,13 @@ No tabs, use spaces for alignment (for viewcvs)
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.3  2005-04-05 19:08:14  ralfoide
-//	Update: v1.1, text-based permalinks, permalink anchors.
+//	Revision 1.4  2005-05-12 15:50:26  ralfoide
+//	Fix: Empty lines that consist of solely white-space characters in RPage
+//	Fix: Remove unnecessary <p> at beginning of RSS post content
 //
+//	Revision 1.3  2005/04/05 19:08:14  ralfoide
+//	Update: v1.1, text-based permalinks, permalink anchors.
+//	
 //	Revision 1.2  2005/02/16 02:32:54  ralfoide
 //	Version 1.0 on SourceForge with DEB package
 //	

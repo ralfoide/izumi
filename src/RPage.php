@@ -918,6 +918,7 @@ class RPage
 		$state['filepath']   = $filepath;
 		$state['printer']    = $print_function;
 		$state['output']     = '';
+		$state['last_p']	 = FALSE;
 	}
 
 
@@ -935,6 +936,8 @@ class RPage
 		$same_line		= $state['same_line'];
 		$filepath		= $state['filepath'];
 		$print_function	= $state['printer'];
+		$last_p			= $state['last_p'];
+
 
 		$continue_process = TRUE;
 		
@@ -1338,11 +1341,17 @@ class RPage
 				
 				$p[] = '/(^|[^\[])\[(\[.*?\])/';
 				$r[] = '\1\2';
-	
+
 				// perform actions
 
 				$line = preg_replace($p, $r, $line);
 
+
+				// [RM 20050512 added]
+				// Empty lines that consist of solely white-space characters
+				// Must be done at the very end but before block management
+				if (preg_match('/^(?: |\n|\r|\t)+$/', $line, $m) == 1)
+					$line = '';
 
 				// -- blockquote & pre management --
 				// -- list management --
@@ -1353,20 +1362,19 @@ class RPage
 				$is_bq  = (preg_match("/^(\t+)([^\t\*].*)$/",  $line, $m_bq ) == 1);
 				$is_ul  = (preg_match("/^(\t*)\*[ \t]+(.*)$/", $line, $m_ul ) == 1);
 				$is_pre = (preg_match("/^ (.*)$/",			   $line, $m_pre) == 1);
-	
-	
-	
+
+
 				$new_lbq  = ($is_bq  ? strlen($m_bq[1])   : 0);
 				$new_lul  = ($is_ul  ? strlen($m_ul[1])+1 : 0);
 				$new_lpre = ($is_pre ? 1                  : 0);
-	
+
 				// DEBUG
 				//var_dump($m_ul);
 				//var_dump($level_ul);
 				//var_dump($new_lul);
-		
+
 				// close previous
-	
+
 				for(; $level_ul  > $new_lul;  $level_ul-- )
 					$print_function($state, "</ul>\n");
 	
@@ -1375,9 +1383,9 @@ class RPage
 	
 				for(; $level_bq  > $new_lbq;  $level_bq-- )
 					$print_function($state,  "</blockquote>\n");
-	
+
 				// open new ones
-	
+
 				for(; $level_bq  < $new_lbq;  $level_bq++ )
 					$print_function($state, "<blockquote>\n");
 	
@@ -1386,8 +1394,8 @@ class RPage
 	
 				for(; $level_ul  < $new_lul;  $level_ul++ )
 					$print_function($state, "<ul>\n");
-	
-	
+
+
 				// transform string
 	
 				if ($is_bq)
@@ -1407,7 +1415,23 @@ class RPage
 	
 			// -- output final line --
 
-			$print_function($state, $line . "\n");
+			// Do not output multiple <p> lines nor empty lines.
+			
+			if ($last_p)
+			{
+				while(strncmp($line, "<p>", 3) == 0)
+					$line = substr($line, 3);
+			}
+			
+			if (   $line != '' 
+			    && $line != ' ' 
+			    && $line != '\n')
+			{
+				$print_function($state, $line . "\n");
+					
+				$n = strlen($line);
+				$last_p = ($n >= 3 && strpos($line, "<p>", $n-3) == $n-3);
+			}
 	
 	
 			// -------
@@ -1424,6 +1448,7 @@ class RPage
 		$state['is_comment']  = $is_comment;
 		$state['line']		  = $line;
 		$state['same_line']	  = $same_line;
+		$state['last_p']	  = $last_p;
 
 	}
 	
@@ -1747,9 +1772,13 @@ function izu_blog_section($date, $title)
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.3  2005-04-26 00:45:28  ralfoide
-//	Updating DEB to 1.1
+//	Revision 1.4  2005-05-12 15:50:27  ralfoide
+//	Fix: Empty lines that consist of solely white-space characters in RPage
+//	Fix: Remove unnecessary <p> at beginning of RSS post content
 //
+//	Revision 1.3  2005/04/26 00:45:28  ralfoide
+//	Updating DEB to 1.1
+//	
 //	Revision 1.2  2005/04/05 18:54:01  ralfoide
 //	Started work on version 1.1
 //	Changed blog entries keys from MD5 to encoded date/title clear text.

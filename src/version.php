@@ -24,15 +24,19 @@
 */
 //************************************************************************
 
-$izu_version = "1.1.1";
+$izu_version = "1.1.2";
 
 // end
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.4  2005-05-10 18:06:27  ralfoide
-//	Fixed a minor bug in the RSS export: accents where improperly encoded as HTML entities.
+//	Revision 1.5  2005-05-12 15:50:27  ralfoide
+//	Fix: Empty lines that consist of solely white-space characters in RPage
+//	Fix: Remove unnecessary <p> at beginning of RSS post content
 //
+//	Revision 1.4  2005/05/10 18:06:27  ralfoide
+//	Fixed a minor bug in the RSS export: accents where improperly encoded as HTML entities.
+//	
 //	Revision 1.3  2005/04/05 18:54:01  ralfoide
 //	Started work on version 1.1
 //	Changed blog entries keys from MD5 to encoded date/title clear text.
