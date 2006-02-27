@@ -30,31 +30,40 @@
 
 // ------------------------------------------------------------
 
-// depending on the query string, call the right php script
-// 1- edit => edit.php
-// others  => page.php
 
-$izu_is_edit = (isset($_GET['edit']) && is_string($_GET['edit']) && $_GET['edit']);
+//*************************
+function rig_select($param)
+//*************************
+{
+	global $_GET;
+	global $dir_install;
+	global $dir_src;
+	
+	$dir = $dir_install . $dir_src;
+	$filename = $param . ".php";
 
-if ($izu_is_edit)
-{
-	izu_check_src_file($dir_install . $dir_src . "edit.php");
-	require_once(     $dir_install . $dir_src . "edit.php");
+	if (isset($_GET[$param]) && is_string($_GET[$param]))
+		return "require_once(izu_check_src_file(\"$dir$filename\")); exit();";
+
+	return ";";
 }
-else
-{
-	izu_check_src_file($dir_install . $dir_src . "page.php");
-	require_once     ($dir_install . $dir_src . "page.php");
-}
+
+
+eval(rig_select('php_credits'));
+eval(rig_select('edit'));
+require_once(izu_check_src_file($dir_install . $dir_src . "page.php"));
 
 
 // end
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.1  2005-02-16 02:04:51  ralfoide
-//	Stable version 0.9.4 updated to SourceForge
+//	Revision 1.2  2006-02-27 03:45:47  ralfoide
+//	Fixes
 //
+//	Revision 1.1  2005/02/16 02:04:51  ralfoide
+//	Stable version 0.9.4 updated to SourceForge
+//	
 //	Revision 1.4  2004/12/09 19:44:06  ralf
 //	dos2unix
 //	

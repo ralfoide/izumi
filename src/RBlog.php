@@ -240,6 +240,23 @@ class RBlog extends RPage
 
 
 	//*********************
+	function ExtraHeaders()
+	//*********************
+	// Returns extra lines to insert in the HTML's <head>
+	{	
+		$s = parent::ExtraHeaders();
+
+		if (!$this->mIsRss)
+		{
+			$feed = izu_self_url(-1, -1, -1, 's=rss');
+			return $s . "<link title='RSS' rel='alternate' type='application/rss+xml' href='$feed'>";
+		}
+
+		return $s;
+	}
+
+
+	//*********************
 	function BeginProcess()
 	//*********************
 	{
@@ -293,21 +310,6 @@ class RBlog extends RPage
 			return "template_rss.php";
 		else
 			return parent::TemplateName($type);
-	}
-
-
-	//*********************
-	function ExtraHeaders()
-	//*********************
-	// Returns extra lines to insert in the HTML's <head>
-	{
-		if (!$this->mIsRss)
-		{
-			$feed = izu_self_url(-1, -1, -1, 's=rss');
-			return "<link title='RSS' rel='alternate' type='application/rss+xml' href='$feed'>";
-		}
-
-		return '';
 	}
 
 
@@ -1183,10 +1185,13 @@ class RBlog extends RPage
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.4  2005-05-12 15:50:26  ralfoide
+//	Revision 1.5  2006-02-27 03:45:46  ralfoide
+//	Fixes
+//
+//	Revision 1.4  2005/05/12 15:50:26  ralfoide
 //	Fix: Empty lines that consist of solely white-space characters in RPage
 //	Fix: Remove unnecessary <p> at beginning of RSS post content
-//
+//	
 //	Revision 1.3  2005/05/10 18:06:26  ralfoide
 //	Fixed a minor bug in the RSS export: accents where improperly encoded as HTML entities.
 //	

@@ -256,7 +256,7 @@ class RPage
 
 		//-----------------------------------------------------------------------
 		// HTML header and body
-		
+	
 		izu_display_header($display_title, $this->ExtraHeaders());
 		izu_display_body();
 		
@@ -329,7 +329,36 @@ class RPage
 	//*********************
 	// Returns extra lines to insert in the HTML's <head>
 	{
-		return '';
+		global $color_section_bg;
+		global $color_section_text;
+
+		$section = ".izu-section { ";
+		$section .= "  color: " . $color_section_text;
+		$section .= "; background-color: " . $color_section_bg;
+		$section .= "; padding: 1px 10px 1px 10px; ";
+		$section .= "; font-weight: bold ";
+		$section .= "; display: inline";
+		$section .= "; border-bottom: 1px solid";
+		$section .= "; border-top: none";
+		$section .= "; border-left: none";
+		$section .= "; border-right: none";
+		$section .= "; }\n";
+
+		$hN = "H1, H2, H3, H4, H5 { ";
+		$hN .= "  color: " . $color_section_text;
+		$hN .= "; background-color: " . $color_section_bg;
+		$hN .= "; padding: 1px 10px 1px 10px; ";
+		$hN .= "; border-bottom: 1px solid";
+		$hN .= "; border-top: none";
+		$hN .= "; border-left: none";
+		$hN .= "; border-right: none";
+		$hN .= ";  display: inline";
+		$hN .= "; }\n";
+		//$hN .= "H1 {";
+		//$hN .= "  display: block";
+		//$hN .= "; }\n";
+
+		return "<style type='text/css'>\n $section $hN </style>\n";
 	}
 
 
@@ -1018,16 +1047,17 @@ class RPage
 			
 			// -----
 	
+	/*
 			if ($continue_process)
 			{
-				// empty lines are paragraphs
+				// 
 				if ($line == '')
 				{
 					$line = '<p>';
 					$continue_process = FALSE;
 				}
 			}
-
+*/
 			// -- performs basic replacements --
 
 			if ($continue_process)
@@ -1064,6 +1094,12 @@ class RPage
 				$p[] = '/</';
 				$r[] = '&lt;';
 	
+
+				// -- empty lines are paragraphs --
+				
+				$p[] = '/^$/';
+				$r[] = '<p>';
+
 	
 				// --- Izu processing codes --
 	
@@ -1127,6 +1163,11 @@ class RPage
 	
 				$p[] = "/(^|[^'])''([^'].*?)''($|[^'])/";
 				$r[] = '\1<i>\2</i>\3';
+				
+				// set ==xx== as code
+	
+				$p[] = "/(^|[^=])==([^=].*?)==($|[^=])/";
+				$r[] = '\1<code>\2</code>\3';
 	
 				// transforms ___ (3 _) in two of them
 	
@@ -1137,6 +1178,11 @@ class RPage
 	
 				$p[] = "/(^|[^'])'''('*)/";
 				$r[] = "\\1''\\2";
+
+				// transforms === (3 =) in two of them
+	
+				$p[] = "/(^|[^=])===(=*)/";
+				$r[] = "\\1==\\2";
 	
 				// -- izu formating codes --
 				
@@ -1763,7 +1809,8 @@ function izu_blog_section($date, $title)
 		$str .= '&nbsp;&laquo;&raquo;&nbsp;' . $title;
 	$str .= "&nbsp;&nbsp;&laquo;&raquo;";
 
-	return "<p><span style=\"$style\">$str</span><p>\n";
+	// return "<p><span class=\"izu-section\" style=\"$style\">$str</span><p>\n";
+	return "<p><div class=\"izu-section\">$str</div><p>\n";
 }
 
 
@@ -1772,10 +1819,13 @@ function izu_blog_section($date, $title)
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.4  2005-05-12 15:50:27  ralfoide
+//	Revision 1.5  2006-02-27 03:45:47  ralfoide
+//	Fixes
+//
+//	Revision 1.4  2005/05/12 15:50:27  ralfoide
 //	Fix: Empty lines that consist of solely white-space characters in RPage
 //	Fix: Remove unnecessary <p> at beginning of RSS post content
-//
+//	
 //	Revision 1.3  2005/04/26 00:45:28  ralfoide
 //	Updating DEB to 1.1
 //	

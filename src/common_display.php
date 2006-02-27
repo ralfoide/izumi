@@ -447,7 +447,11 @@ function izu_display_credits($has_credits = -1, $has_phpinfo = -1)
 		<?php
 
 		if ($has_credits != "no-link")
-			phpinfo(INFO_CREDITS);
+		{
+			?>
+			<a href="?php_credits=on">PHP Credits</a>
+			<?php
+		}
 	}
 
 	// actually display the PHP info if activated
@@ -501,9 +505,12 @@ function izu_display_footer()
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.1  2005-02-16 02:04:51  ralfoide
-//	Stable version 0.9.4 updated to SourceForge
+//	Revision 1.2  2006-02-27 03:45:47  ralfoide
+//	Fixes
 //
+//	Revision 1.1  2005/02/16 02:04:51  ralfoide
+//	Stable version 0.9.4 updated to SourceForge
+//	
 //	Revision 1.10  2004/12/20 07:01:37  ralf
 //	New minor features. Version 0.9.4
 //	
