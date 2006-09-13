@@ -294,6 +294,7 @@ class RPage
 		{
 			izu_display_options();
 			izu_display_search();
+			izu_display_related();
 		}
 		
 		//-----------------------------------------------------------------------
@@ -1110,12 +1111,16 @@ class RPage
 	
 				// Izu:image with optional align tag, optional link and optional label
 				// Format is [izu:image:url_img(,align=blah)(|url_link)(:label)]
-				// Url_link must start with http or ftp or #. The link cannot contain " : or < >
+				// Url_link must start with http. The link cannot contain " : or < >
 				
+				//       \1:delim             \2:url img                                      \3:tag   \4:value      \5:link_url                           \6:label
+				$p[] = '@(^|[^\[])\[izu:image:(https?://[^\],"<>]+\.(?:gif|jpe?g|png|svg))(?:,([a-z]+)=([a-z]+))?(?:\|((?:https?://|ftp://|#)[^:"<>]+))?(?::([^\]]+))?\]@e';	// anywhere, without [[
+				$r[] = '"\1" . izu_image_tag("\2", NULL, "\3", "\4", "\5", "\6")';
+
+				// This one is for local links. They'll be escaped and prefixed with the site's URL
 				//       \1:delim             \2:url img                             \3:tag   \4:value      \5:link_url                           \6:label
 				$p[] = '@(^|[^\[])\[izu:image:([^\],"<>]+\.(?:gif|jpe?g|png|svg))(?:,([a-z]+)=([a-z]+))?(?:\|((?:https?://|ftp://|#)[^:"<>]+))?(?::([^\]]+))?\]@e';	// anywhere, without [[
-				$r[] = '"\1" . izu_image_tag("\2", "\3", "\4", "\5", "\6")';
-
+				$r[] = '"\1" . izu_image_tag(NULL, "\2", "\3", "\4", "\5", "\6")';
 	
 				// Izu:blogrefs
 				
@@ -1699,7 +1704,8 @@ function izu_enscript_file($enscript_file, $izu_file)
 
 
 //*******************************************
-function izu_image_tag($img_url,
+function izu_image_tag($http_url,
+					   $local_url,
 					   $tag_name, $tag_value,
 					   $link_url,
 					   $label_url)
@@ -1711,10 +1717,19 @@ function izu_image_tag($img_url,
 {
 	global $dir_album;
 
-	// Cleanup URL
-	$img_url = izu_decode_argument($img_url);
-	$img_url = izu_post_sep($dir_album) . $img_url;
-	$img_url = izu_self_url($img_url);
+	$img_url = "";
+
+	if ($local_url != NULL) {
+		// Cleanup & format local URL
+		$img_url = izu_decode_argument($local_url);
+		$img_url = izu_post_sep($dir_album) . $img_url;
+		$img_url = izu_self_url($img_url);
+	} else if ($http_url != NULL) {
+		// The regexp prevents " and < > from appearing so this is good enough
+		$img_url = $http_url;
+	} else {
+		return "<!-- invalid izu:image -->";
+	}
 
 	$s = "<img src=\"$img_url\"";
 
@@ -1819,9 +1834,13 @@ function izu_blog_section($date, $title)
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.5  2006-02-27 03:45:47  ralfoide
-//	Fixes
+//	Revision 1.6  2006-09-13 05:58:42  ralfoide
+//	[1.1.4] Fixed izu:image with external http:// urls.
+//	[1.1.3] Source: Added Google Related Links display.
 //
+//	Revision 1.5  2006/02/27 03:45:47  ralfoide
+//	Fixes
+//	
 //	Revision 1.4  2005/05/12 15:50:27  ralfoide
 //	Fix: Empty lines that consist of solely white-space characters in RPage
 //	Fix: Remove unnecessary <p> at beginning of RSS post content

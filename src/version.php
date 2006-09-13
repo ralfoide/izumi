@@ -24,16 +24,20 @@
 */
 //************************************************************************
 
-$izu_version = "1.1.2";
+$izu_version = "1.1.4";
 
 // end
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.5  2005-05-12 15:50:27  ralfoide
+//	Revision 1.6  2006-09-13 05:58:42  ralfoide
+//	[1.1.4] Fixed izu:image with external http:// urls.
+//	[1.1.3] Source: Added Google Related Links display.
+//
+//	Revision 1.5  2005/05/12 15:50:27  ralfoide
 //	Fix: Empty lines that consist of solely white-space characters in RPage
 //	Fix: Remove unnecessary <p> at beginning of RSS post content
-//
+//	
 //	Revision 1.4  2005/05/10 18:06:27  ralfoide
 //	Fixed a minor bug in the RSS export: accents where improperly encoded as HTML entities.
 //	

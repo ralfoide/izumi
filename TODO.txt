@@ -51,8 +51,19 @@ TBDL
 
 -- done --
 
+[1.1.4] (unstable)
+
+20060912 [1.F] Fixed izu:image with external http:// urls.
+
+[1.1.3] (unstable)
+
+20060513 [2.F] Source: Added Google Related Links display.
+
 [1.1.2] (unstable)
 
+20051226 [1.F] Fix:     Missing CSS header in blog mode
+20051113 [1.F] Source:  Minor CSS for section and H1-H5
+20050526 [1.F] Fix:     Fixed bug creating an extra <p> before </pre> and </ul>
 20050512 [1.F] Fix:     Empty lines that consist of solely white-space characters in RPage
 20050512 [1.F] Fix:     Remove unnecessary <p> at beginning of RSS post content
 
@@ -204,10 +215,14 @@ No tabs, use spaces for alignment (for viewcvs)
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.4  2005-05-12 15:50:26  ralfoide
+//	Revision 1.5  2006-09-13 05:58:42  ralfoide
+//	[1.1.4] Fixed izu:image with external http:// urls.
+//	[1.1.3] Source: Added Google Related Links display.
+//
+//	Revision 1.4  2005/05/12 15:50:26  ralfoide
 //	Fix: Empty lines that consist of solely white-space characters in RPage
 //	Fix: Remove unnecessary <p> at beginning of RSS post content
-//
+//	
 //	Revision 1.3  2005/04/05 19:08:14  ralfoide
 //	Update: v1.1, text-based permalinks, permalink anchors.
 //	

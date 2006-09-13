@@ -121,7 +121,7 @@ the cached entry will be served:
 //-----------------------------------------------------------------------
 
 define("BLOG_NB_MAIN", 10);
-define("BLOG_NB_PREV",  5);
+define("BLOG_NB_PREV", 20);
 
 //-----------------------------------------------------------------------
 
@@ -881,6 +881,7 @@ class RBlog extends RPage
 		// Set archives to current and close mains
 		$this->writeOldArticlesHeader($current_main_file);
 		$this->writeOldArticlesLink($main_file_list, $main_index, $first_date, $last_date);
+		$this->writeFinalRssLink($main_file_list);
 
 		// Close all main files
 		foreach($main_file_list as $f)
@@ -930,9 +931,10 @@ class RBlog extends RPage
 		if ($file != NULL)
 		{
 			fwrite($file, "\n\nBlog Archives: /\n");
-			$this->writePermalink($file, "Most recent posts", '', '');
-			fwrite($file, "&nbsp;|&nbsp;");
-			$this->writePermalink($file, "[[RSS]", 'rss', 'br');
+			$this->writePermalink($file, "Most recent posts", '', 'br');
+			// RM 20060328 moving to writeFinalRssLink
+			//fwrite($file, "&nbsp;|&nbsp;");
+			//$this->writePermalink($file, "[[RSS]", 'rss', 'br');
 		}
 	}
 	
@@ -964,6 +966,18 @@ class RBlog extends RPage
 		for($n = count($files)-2; $n >= 0; $n--)
 		{
 			$this->writePermalink($files[$n], $s, $main_index, 'br');
+		}
+	}
+
+	
+	
+	//*************************************************************************
+	function writeFinalRssLink($files)
+	//*************************************************************************
+	{
+		for($n = count($files)-2; $n >= 0; $n--)
+		{
+			$this->writePermalink($files[$n], "[[RSS]", 'rss', 'br');
 		}
 	}
 
@@ -1185,9 +1199,13 @@ class RBlog extends RPage
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.5  2006-02-27 03:45:46  ralfoide
-//	Fixes
+//	Revision 1.6  2006-09-13 05:58:42  ralfoide
+//	[1.1.4] Fixed izu:image with external http:// urls.
+//	[1.1.3] Source: Added Google Related Links display.
 //
+//	Revision 1.5  2006/02/27 03:45:46  ralfoide
+//	Fixes
+//	
 //	Revision 1.4  2005/05/12 15:50:26  ralfoide
 //	Fix: Empty lines that consist of solely white-space characters in RPage
 //	Fix: Remove unnecessary <p> at beginning of RSS post content

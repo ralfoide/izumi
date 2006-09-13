@@ -272,6 +272,41 @@ function izu_display_search()
 }
 
 
+//****************************
+function izu_display_related()
+//****************************
+{
+	global $color_body_bg;
+	global $color_body_text;
+	global $color_body_link;
+	global $color_section_bg;
+	global $color_title_text;
+	
+	// Google Related Links: http://www.google.com/relatedlinks/
+
+	?>
+	<script type="text/javascript" language="JavaScript">
+	<!--
+	  var google_rc = {
+	    format: '728x90_rc',
+	    width: 728,
+	    height: 90,
+	    modules: ['searches','news','pages'],
+	    color_line:   '<?= substr($color_table_border,1) ?>',
+	    color_link:   '<?= substr($color_body_link,1) ?>',
+	    color_bg:     '<?= substr($color_body_bg,1) ?>',
+	    color_text:   '<?= substr($color_body_text,1) ?>',
+	    color_source: '<?= substr($color_body_text,1) ?>',
+	    color_header: '<?= substr($color_section_bg,1) ?>',
+	    color_footer: '<?= substr($color_section_bg,1) ?>'
+	  };
+	//-->
+	</script>
+	<script type="text/javascript" language="JavaScript" src="http://relcontent.googlesyndication.com/relcontent/show_rc.js"></script>
+	<p/>
+	<?php
+}
+
 //******************************************
 function izu_display_options($use_hr = TRUE)
 //******************************************
@@ -505,9 +540,13 @@ function izu_display_footer()
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.2  2006-02-27 03:45:47  ralfoide
-//	Fixes
+//	Revision 1.3  2006-09-13 05:58:42  ralfoide
+//	[1.1.4] Fixed izu:image with external http:// urls.
+//	[1.1.3] Source: Added Google Related Links display.
 //
+//	Revision 1.2  2006/02/27 03:45:47  ralfoide
+//	Fixes
+//	
 //	Revision 1.1  2005/02/16 02:04:51  ralfoide
 //	Stable version 0.9.4 updated to SourceForge
 //	
