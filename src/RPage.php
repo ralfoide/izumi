@@ -294,7 +294,7 @@ class RPage
 		{
 			izu_display_options();
 			izu_display_search();
-			izu_display_related();
+			//--RM 20080326-- izu_display_related();
 		}
 		
 		//-----------------------------------------------------------------------
@@ -491,7 +491,8 @@ class RPage
 
 		// check for page that shouldn't be served unless some very specific
 		// query is provided
-		if (preg_match('/\[izu:refuse(?::(.*?))\]/', $temp, $matches) == 1)
+		// RM 20070708 Fix => missing ()? on optional param, that is [izu:refuse] is legal.
+		if (preg_match('/\[izu:refuse(?::(.*?))?\]/', $temp, $matches) == 1)
 		{
 			$valid = FALSE;
 
@@ -627,7 +628,7 @@ class RPage
 			{
 				// check if dir modif date is newer
 				
-				$tm = filemtime($path);
+				$tm = @filemtime($path);
 	
 				if ($tm > $compare_date)
 					return TRUE;
@@ -646,7 +647,7 @@ class RPage
 					{
 						// check if file date is newer
 			
-						$tm = filemtime($path . $file);
+						$tm = @filemtime($path . $file);
 						
 						if ($tm > $compare_date)
 						{
@@ -1114,13 +1115,19 @@ class RPage
 				// Url_link must start with http. The link cannot contain " : or < >
 				
 				//       \1:delim             \2:url img                                      \3:tag   \4:value      \5:link_url                           \6:label
-				$p[] = '@(^|[^\[])\[izu:image:(https?://[^\],"<>]+\.(?:gif|jpe?g|png|svg))(?:,([a-z]+)=([a-z]+))?(?:\|((?:https?://|ftp://|#)[^:"<>]+))?(?::([^\]]+))?\]@e';	// anywhere, without [[
-				$r[] = '"\1" . izu_image_tag("\2", NULL, "\3", "\4", "\5", "\6")';
+				$p[] = '@(^|[^\[])\[izu:image:(https?://[^\],"<>]+\.(?i:gif|jpe?g|png|svg))(?:,([a-z]+)=([a-z]+))?(?:\|((?:https?://|ftp://|#)[^:"<>\]]+))?(?::([^\]]+))?\]@e';	// anywhere, without [[
+				$r[] = '"\1" . izu_image_tag("\2", NULL, "\3", "\4", "\5", "\6", NULL, NULL)';
 
 				// This one is for local links. They'll be escaped and prefixed with the site's URL
 				//       \1:delim             \2:url img                             \3:tag   \4:value      \5:link_url                           \6:label
-				$p[] = '@(^|[^\[])\[izu:image:([^\],"<>]+\.(?:gif|jpe?g|png|svg))(?:,([a-z]+)=([a-z]+))?(?:\|((?:https?://|ftp://|#)[^:"<>]+))?(?::([^\]]+))?\]@e';	// anywhere, without [[
-				$r[] = '"\1" . izu_image_tag(NULL, "\2", "\3", "\4", "\5", "\6")';
+				$p[] = '@(^|[^\[])\[izu:image:([^\],"<>]+\.(?i:gif|jpe?g|png|svg))(?:,([a-z]+)=([a-z]+))?(?:\|((?:https?://|ftp://|#)[^:"<>\]]+))?(?::([^\]]+))?\]@e';	// anywhere, without [[
+				$r[] = '"\1" . izu_image_tag(NULL, "\2", "\3", "\4", "\5", "\6", NULL, NULL)';
+
+				// izu:img-small-link for a local image and its preview size, and
+				// generates a link to the full image.
+				//       \1:delim                      \2:sx    \3:sy    \4:url img                         \5:label
+				$p[] = '@(^|[^\[])\[izu:img-small-link:([0-9]+)x([0-9]+):([^\],"<>]+\.(?i:gif|jpe?g|png|svg))(?::([^\]]+))?\]@e';	// anywhere, without [[
+				$r[] = '"\1" . izu_image_tag(NULL, "\4", "", "", "\4", "\5", "\2", "\3")';
 	
 				// Izu:blogrefs
 				
@@ -1704,11 +1711,13 @@ function izu_enscript_file($enscript_file, $izu_file)
 
 
 //*******************************************
-function izu_image_tag($http_url,
-					   $local_url,
+function izu_image_tag($http_url,              // can be NULL If not set
+					   $local_url,             // can be NULL If not set
 					   $tag_name, $tag_value,
 					   $link_url,
-					   $label_url)
+					   $label_url,
+					   $sx,                    // can be NULL If not set
+					   $sy)                    // can be NULL If not set
 //*******************************************
 // Regexp Callback functions must return a string, not output to echo
 // RM 20040118
@@ -1720,10 +1729,15 @@ function izu_image_tag($http_url,
 	$img_url = "";
 
 	if ($local_url != NULL) {
+		$link_to_local = ($local_url == $link_url);
+
 		// Cleanup & format local URL
 		$img_url = izu_decode_argument($local_url);
 		$img_url = izu_post_sep($dir_album) . $img_url;
 		$img_url = izu_self_url($img_url);
+		
+		if ($link_to_local)
+			$link_url = $img_url;
 	} else if ($http_url != NULL) {
 		// The regexp prevents " and < > from appearing so this is good enough
 		$img_url = $http_url;
@@ -1732,6 +1746,12 @@ function izu_image_tag($http_url,
 	}
 
 	$s = "<img src=\"$img_url\"";
+
+	if ($sx != NULL && is_string($sx) && $sx != "")
+		$s .= " width=\"$sx\"";
+
+	if ($sy != NULL && is_string($sy) && $sy != "")
+		$s .= " height=\"$sy\"";
 
 	if (is_string($tag_name) && is_string($tag_value) && $tag_name != "" && $tag_value != "")
 		$s .= " $tag_name=\"$tag_value\"";
@@ -1834,10 +1854,13 @@ function izu_blog_section($date, $title)
 
 //-------------------------------------------------------------
 //	$Log$
-//	Revision 1.6  2006-09-13 05:58:42  ralfoide
+//	Revision 1.7  2008-10-26 22:58:55  ralfoide
+//	Fix: image extensions should be case-insenstive in regexps
+//
+//	Revision 1.6  2006/09/13 05:58:42  ralfoide
 //	[1.1.4] Fixed izu:image with external http:// urls.
 //	[1.1.3] Source: Added Google Related Links display.
-//
+//	
 //	Revision 1.5  2006/02/27 03:45:47  ralfoide
 //	Fixes
 //	
